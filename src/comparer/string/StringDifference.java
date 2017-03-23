@@ -1,4 +1,4 @@
-package comparer;
+package comparer.string;
 
 import util.Util;
 

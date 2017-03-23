@@ -1,6 +1,6 @@
 package preprocess;
 
-import comparer.StringDifference;
+import comparer.string.StringDifference;
 
 import java.io.*;
 import java.util.ArrayList;

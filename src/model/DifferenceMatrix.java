@@ -2,7 +2,6 @@ package model;
 
 import util.Util;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +10,6 @@ import java.util.Set;
  * Created by Sriram on 21-03-2017.
  */
 public class DifferenceMatrix<T> extends TestChangeMatrix{
-
 
     public DifferenceMatrix(String fileName, Class<T> type) throws Exception {
         super(fileName,type);
@@ -71,11 +69,11 @@ public class DifferenceMatrix<T> extends TestChangeMatrix{
         }
         String currentMin = null;
 
-        Set<String> candidates = getRemainingTests(tests);
+        Set<String> candidates = excludeTests(tests);
         if(typeOfT == Long.class) {
             Long score = 0l;
             for( String candidate : candidates ) {
-                
+
             }
         } else if (typeOfT == Double.class) {
 
@@ -106,12 +104,20 @@ public class DifferenceMatrix<T> extends TestChangeMatrix{
         return (String) indexTest.get(farthest);
     }
 
-    private Set<String> getRemainingTests(List<String> excludeList) {
+    public Set<String> excludeTests(List<String> excludeList) {
         Set<String> tests = testIndex.keySet();
         for(String test:excludeList) {
             tests.remove(test);
         }
         return tests;
+    }
+
+    public Integer getIndexByTest(String test) {
+        return (Integer) testIndex.get(test);
+    }
+
+    public String getTestByIndex(Integer index) {
+        return (String) indexTest.get(index);
     }
 
     public static void main(String[] args) throws Exception {

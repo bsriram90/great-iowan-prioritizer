@@ -2,6 +2,8 @@ package model;
 
 import util.Util;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +21,7 @@ public class DifferenceMatrix<T> extends TestChangeMatrix{
         matrix = (T[][]) new Object[size][size];
         for (int i = 0; i < size; i++) {
             testIndex.put(headers[i + 1], i);
+            indexTest.put(i,headers[i + 1]);
         }
         for (int i = 1; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -35,6 +38,80 @@ public class DifferenceMatrix<T> extends TestChangeMatrix{
                 matrix[j - 1][i - 1] = (T) val;
             }
         }
+    }
+
+    private String getClosestTest(String test) {
+        int index = (int) testIndex.get(test);
+        int closest = 0;
+        if(typeOfT == Long.class) {
+            Long diff = (Long)matrix[index][0] - (Long)matrix[index][closest];
+            for(int i = 1; i < size; i++) {
+                if ((Long)matrix[index][i] - (Long)matrix[index][closest] < diff) {
+                    closest = i;
+                    diff = (Long)matrix[index][i] - (Long)matrix[index][closest];
+                }
+            }
+        } else if (typeOfT == Double.class) {
+            Double diff = (Double)matrix[index][0] - (Double)matrix[index][closest];
+            for(int i = 1; i < size; i++) {
+                if ((Double)matrix[index][i] - (Double)matrix[index][closest] < diff) {
+                    closest = i;
+                    diff = (Double)matrix[index][i] - (Double)matrix[index][closest];
+                }
+            }
+        }
+        return (String) indexTest.get(closest);
+    }
+
+    public String getClosestTest(LinkedList<String> tests) {
+        if(tests.size() == 0) {
+            return null;
+        } else if (tests.size() == 1) {
+            return getClosestTest(tests.getFirst());
+        }
+        String currentMin = null;
+
+        Set<String> candidates = getRemainingTests(tests);
+        if(typeOfT == Long.class) {
+            Long score = 0l;
+            for( String candidate : candidates ) {
+                
+            }
+        } else if (typeOfT == Double.class) {
+
+        }
+        return currentMin;
+    }
+
+    private String getFarthestTest(String test) {
+        int index = (int) testIndex.get(test);
+        int farthest = 0;
+        if(typeOfT == Long.class) {
+            Long diff = (Long)matrix[index][0] - (Long)matrix[index][farthest];
+            for(int i = 1; i < size; i++) {
+                if ((Long)matrix[index][i] - (Long)matrix[index][farthest] > diff) {
+                    farthest = i;
+                    diff = (Long)matrix[index][i] - (Long)matrix[index][farthest];
+                }
+            }
+        } else if (typeOfT == Double.class) {
+            Double diff = (Double)matrix[index][0] - (Double)matrix[index][farthest];
+            for(int i = 1; i < size; i++) {
+                if ((Double)matrix[index][i] - (Double)matrix[index][farthest] > diff) {
+                    farthest = i;
+                    diff = (Double)matrix[index][i] - (Double)matrix[index][farthest];
+                }
+            }
+        }
+        return (String) indexTest.get(farthest);
+    }
+
+    private Set<String> getRemainingTests(List<String> excludeList) {
+        Set<String> tests = testIndex.keySet();
+        for(String test:excludeList) {
+            tests.remove(test);
+        }
+        return tests;
     }
 
     public static void main(String[] args) throws Exception {

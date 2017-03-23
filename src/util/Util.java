@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,5 +33,11 @@ public class Util {
             }
         }
         return lines;
+    }
+
+    public static HashMap<String,Object> getDefaultPrioritizerCriteria() {
+        HashMap<String,Object> criteria = new HashMap<>();
+        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD,Variables.CLOSEST);
+        return criteria;
     }
 }

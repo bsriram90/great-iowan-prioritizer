@@ -5,5 +5,7 @@ package util;
  */
 public class Variables {
 
-    //public static final String
+    public static final String PRIORITIZER_SEARCH_METHOD = "prioritizerSearchMethod";
+    public static final String CLOSEST = "closest";
+    public static final String FARTHEST = "farthest";
 }

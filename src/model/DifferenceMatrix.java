@@ -2,25 +2,17 @@ package model;
 
 import util.Util;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Sriram on 21-03-2017.
  */
-public class DifferenceMatrix<T> {
-    private T[][] matrix;
-    private int size;
-    private Map<String, Integer> testIndex;
-    private Class<T> typeOfT;
+public class DifferenceMatrix<T> extends TestChangeMatrix{
+
 
     public DifferenceMatrix(String fileName, Class<T> type) throws Exception {
-        if (!(type == Long.class || type == Double.class)) {
-            throw new Exception("Invalid datatype. Only long and double supported");
-        }
-        typeOfT = type;
-        testIndex = new HashMap<>();
+        super(fileName,type);
         List<String> lines = Util.getLinesFromFile(fileName);
         String[] headers = lines.get(0).split(",");
         this.size = headers.length - 1;
@@ -31,7 +23,7 @@ public class DifferenceMatrix<T> {
         for (int i = 1; i < lines.size(); i++) {
             String line = lines.get(i);
             String[] entries = line.split(",");
-            int index = testIndex.get(entries[0]);
+            int index = (int) testIndex.get(entries[0]);
             for (int j = 1 + i; j < entries.length; j++) {
                 Object val = null;
                 if (typeOfT == Long.class) {
@@ -53,6 +45,9 @@ public class DifferenceMatrix<T> {
     }
 
     public void printMatrix() {
+        for(String key : (Set<String>)testIndex.keySet()) {
+            System.out.println(key + " - " + testIndex.get(key));
+        }
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 System.out.print(matrix[i][j] + "\t");
@@ -60,6 +55,4 @@ public class DifferenceMatrix<T> {
             System.out.print(System.lineSeparator());
         }
     }
-
-
 }

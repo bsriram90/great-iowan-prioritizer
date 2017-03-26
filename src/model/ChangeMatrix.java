@@ -5,11 +5,14 @@ import util.Util;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Created by Sriram on 23-03-2017.
  */
 public class ChangeMatrix<T> extends TestChangeMatrix {
+
+    private static final Logger logger = Logger.getLogger(ChangeMatrix.class.getName());
 
     public ChangeMatrix(String fileName, Class<T> type) throws Exception {
         super(fileName, type);
@@ -38,27 +41,6 @@ public class ChangeMatrix<T> extends TestChangeMatrix {
                 System.getProperty("user.dir"));
         ChangeMatrix<Long> matrix = new ChangeMatrix<>("./res/v2-v3.csv", Long.class);
         matrix.printMatrix();
-    }
-
-    public Object[] getOrderAndDifferingTest(String startTest, Long threshold) throws Exception {
-        Object[] results = new Object[2];
-        LinkedList<String> order = new LinkedList<>();
-        if (this.typeOfT != Long.class) {
-            throw new Exception("Invalid type. Matrix is not Long");
-        }
-        int start = -1;
-        if (startTest != null) {
-            start = (int) testIndex.get(startTest);
-        }
-        for (int i = start + 1; i < size; i++) {
-            order.add((String) indexTest.get(i));
-            if ((Long) matrix[0][i] >= threshold) {
-                results[0] = indexTest.get(i);
-                break;
-            }
-        }
-        results[1] = order;
-        return results;
     }
 
     public void printMatrix() {

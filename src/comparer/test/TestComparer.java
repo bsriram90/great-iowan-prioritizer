@@ -1,15 +1,17 @@
 package comparer.test;
 
+import model.ChangeMatrix;
 import model.DifferenceMatrix;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
  * Created by Sriram on 23-03-2017.
  */
-public interface TestComparer {
+public abstract class TestComparer {
 
-    public String getNextTest(String test, DifferenceMatrix differenceMatrix, boolean debug);
-
-    public String getNextTest(LinkedList<String> tests, DifferenceMatrix differenceMatrix, boolean debug);
+    public LinkedList<String> getExecutionOrder(ChangeMatrix change, DifferenceMatrix diff, HashMap<String, Object> criteria) throws Exception {
+        return null;
+    }
 }

@@ -1,12 +1,9 @@
 package util;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Sriram on 09-03-2017.
@@ -35,9 +32,20 @@ public class Util {
         return lines;
     }
 
+    public static String getStringFromCollection(Collection c) {
+        StringBuilder builder = new StringBuilder("");
+        Iterator itr = c.iterator();
+        while(itr.hasNext()) {
+            builder.append(itr.next() + ",");
+        }
+        return builder.substring(0,builder.length()-1);
+    }
+
     public static HashMap<String,Object> getDefaultPrioritizerCriteria() {
         HashMap<String,Object> criteria = new HashMap<>();
-        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD,Variables.CLOSEST);
+        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD,Variables.FARTHEST_FROM_NO_CHANGE);
+        criteria.put(Variables.THRESHOLD, 1000l);
+        criteria.put(Variables.DEBUG, true);
         return criteria;
     }
 }

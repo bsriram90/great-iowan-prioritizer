@@ -1,7 +1,6 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Sriram on 23-03-2017.
@@ -13,7 +12,7 @@ public abstract class TestChangeMatrix<T> {
     protected Map<Integer, String> indexTest = new HashMap<>();
     protected Class<T> typeOfT;
 
-    public TestChangeMatrix(String fileName, Class<T> type) throws Exception{
+    public TestChangeMatrix(String fileName, Class<T> type) throws Exception {
         if (!(type == Long.class || type == Double.class)) {
             throw new Exception("Invalid datatype. Only long and double supported");
         }
@@ -26,6 +25,39 @@ public abstract class TestChangeMatrix<T> {
 
     public void setMatrix(T[][] matrix) {
         this.matrix = matrix;
+    }
+
+    public Long[][] getLongMatrix() {
+        int r = matrix.length;
+        int c = matrix[0].length;
+        Long[][] longMatrix = new Long[r][c];
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                if (matrix[i][j] != null) {
+                    longMatrix[i][j] = (Long) matrix[i][j];
+                } else {
+                    longMatrix[i][j] = 0l;
+                }
+            }
+        }
+        return longMatrix;
+    }
+
+    public Set<String> excludeTests(Collection<String> excludeList) {
+        //TODO change this to linked hash set
+        Set<String> tests = new HashSet<>(testIndex.keySet());
+        for (String test : excludeList) {
+            tests.remove(test);
+        }
+        return tests;
+    }
+
+    public Integer getIndexByTest(String test) {
+        return (Integer) testIndex.get(test);
+    }
+
+    public String getTestByIndex(Integer index) {
+        return (String) indexTest.get(index);
     }
 
     public Integer getSize() {

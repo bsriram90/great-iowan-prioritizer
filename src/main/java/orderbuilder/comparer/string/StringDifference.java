@@ -12,21 +12,21 @@ public class StringDifference {
 
     public static long basicLineDifference(List<String> text1, List<String> text2) {
         long difference = 0;
-        HashMap<String,Integer> methodAndCount = new HashMap<String,Integer>();
-        for(String line : text1) {
+        HashMap<String, Integer> methodAndCount = new HashMap<String, Integer>();
+        for (String line : text1) {
             line = line.trim();
-            if(methodAndCount.containsKey(line)) {
+            if (methodAndCount.containsKey(line)) {
                 Integer count = methodAndCount.get(line);
                 methodAndCount.put(line, ++count);
             } else {
-                methodAndCount.put(line,1);
+                methodAndCount.put(line, 1);
             }
         }
-        for(String line : text2) {
+        for (String line : text2) {
             line = line.trim();
-            if(methodAndCount.containsKey(line)) {
+            if (methodAndCount.containsKey(line)) {
                 Integer count = methodAndCount.get(line);
-                if(count == 1) {
+                if (count == 1) {
                     methodAndCount.remove(line);
                 } else {
                     methodAndCount.put(line, --count);
@@ -35,7 +35,7 @@ public class StringDifference {
                 difference++;
             }
         }
-        for(String key : methodAndCount.keySet()) {
+        for (String key : methodAndCount.keySet()) {
             difference += methodAndCount.get(key);
         }
         return difference;

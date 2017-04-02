@@ -14,17 +14,17 @@ import java.util.logging.Logger;
 /**
  * Created by Sriram on 25-03-2017.
  */
-public class FarthestFromNoChange extends  TestComparer {
+public class FarthestFromNoChange extends TestComparer {
 
     Logger logger = Logger.getLogger(FarthestFromNoChange.class.getName());
 
     @Override
     public LinkedList<String> getExecutionOrder(ChangeMatrix change, DifferenceMatrix diff, HashMap<String, Object> criteria) throws Exception {
-        boolean debug = (boolean)criteria.get(Variables.DEBUG);
+        boolean debug = (boolean) criteria.get(Variables.DEBUG);
         if (debug) {
-            logger.info("Building execution order based on tests farthest from tests with changes lesser than threshold - " + criteria.get(Variables.THRESHOLD));
+            logger.info("Building execution order based on tests farthest from tests with changes lesser than threshold - " + criteria.get(Variables.THRESHOLD_1));
         }
-        LinkedHashSet<String> order = getTestsWithFewerChange(change, (Long)criteria.get(Variables.THRESHOLD), debug);
+        LinkedHashSet<String> order = getTestsWithFewerChange(change, (Long) criteria.get(Variables.THRESHOLD_1), debug);
         // if nothing changed enough, return here
         if (order.size() == change.getSize()) {
             if (debug) {
@@ -44,7 +44,7 @@ public class FarthestFromNoChange extends  TestComparer {
 
     private String getNextTest(DifferenceMatrix<Long> differenceMatrix, LinkedHashSet<String> order, boolean debug) {
         Set<String> candidates = differenceMatrix.excludeTests(order);
-        if(debug) {
+        if (debug) {
             logger.info("Looking for test farthest from tests - " + Util.getStringFromCollection(order) + " in candidate set - " + Util.getStringFromCollection(candidates));
         }
         if (candidates.size() == 0) {
@@ -95,17 +95,17 @@ public class FarthestFromNoChange extends  TestComparer {
     }
 
     private LinkedHashSet<String> getTestsWithFewerChange(ChangeMatrix change, Long threshold, boolean debug) {
-        if(debug) {
+        if (debug) {
             logger.info("Looking for tests that have changed fewer than the threshold - " + threshold);
         }
         LinkedHashSet<String> unchangedTests = new LinkedHashSet<>();
         Long[][] matrix = change.getLongMatrix();
-        for(int i=0; i<change.getSize(); i++) {
+        for (int i = 0; i < change.getSize(); i++) {
             if (matrix[0][i] <= threshold) {
                 unchangedTests.add(change.getTestByIndex(i));
             }
         }
-        if(debug) {
+        if (debug) {
             logger.info("Initial tests with no change - " + Util.getStringFromCollection(unchangedTests));
         }
         return unchangedTests;

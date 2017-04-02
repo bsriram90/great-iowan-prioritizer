@@ -35,6 +35,10 @@ public class ChangeMatrix<T> extends TestChangeMatrix {
         }
     }
 
+    public T getChangeByTest(String test) {
+        return (T) matrix[0][getIndexByTest(test)];
+    }
+
     public static void main(String[] args) throws Exception {
         System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));

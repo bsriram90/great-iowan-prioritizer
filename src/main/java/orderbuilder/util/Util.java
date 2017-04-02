@@ -16,7 +16,7 @@ public class Util {
         try {
             reader = new BufferedReader(new FileReader(filename));
             String line = reader.readLine();
-            while(line != null && !line.equals("")) {
+            while (line != null && !line.equals("")) {
                 lines.add(line);
                 line = reader.readLine();
             }
@@ -35,17 +35,19 @@ public class Util {
     public static String getStringFromCollection(Collection c) {
         StringBuilder builder = new StringBuilder("");
         Iterator itr = c.iterator();
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             builder.append(itr.next() + ",");
         }
-        return builder.substring(0,builder.length()-1);
+        return builder.substring(0, builder.length() - 1);
     }
 
-    public static HashMap<String,Object> getDefaultPrioritizerCriteria() {
-        HashMap<String,Object> criteria = new HashMap<>();
-        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD,Variables.CLOSEST_TO_CHANGE);
-        criteria.put(Variables.THRESHOLD, 1000l);
-        criteria.put(Variables.DEBUG, true);
+    public static HashMap<String, Object> getDefaultPrioritizerCriteria() {
+        HashMap<String, Object> criteria = new HashMap<>();
+        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD, Variables.CLOSEST_TO_CHANGE_BACKTRACK);
+        criteria.put(Variables.THRESHOLD_1, 1000l);
+        criteria.put(Variables.THRESHOLD_2, 2l);
+        criteria.put(Variables.THRESHOLD_3, 100l);
+        criteria.put(Variables.DEBUG, false);
         return criteria;
     }
 }

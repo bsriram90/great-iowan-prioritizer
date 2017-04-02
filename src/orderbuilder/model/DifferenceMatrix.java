@@ -1,8 +1,7 @@
-package model;
+package orderbuilder.model;
 
-import util.Util;
+import orderbuilder.util.Util;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

@@ -1,6 +1,6 @@
-package comparer.string;
+package orderbuilder.comparer.string;
 
-import util.Util;
+import orderbuilder.util.Util;
 
 import java.util.HashMap;
 import java.util.List;

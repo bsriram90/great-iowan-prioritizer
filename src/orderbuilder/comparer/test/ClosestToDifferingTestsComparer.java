@@ -1,9 +1,9 @@
-package comparer.test;
+package orderbuilder.comparer.test;
 
-import model.ChangeMatrix;
-import model.DifferenceMatrix;
-import util.Util;
-import util.Variables;
+import orderbuilder.model.ChangeMatrix;
+import orderbuilder.model.DifferenceMatrix;
+import orderbuilder.util.Util;
+import orderbuilder.util.Variables;
 
 import java.util.HashMap;
 import java.util.LinkedList;

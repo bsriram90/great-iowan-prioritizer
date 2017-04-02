@@ -1,12 +1,12 @@
-package prioritizer;
+package orderbuilder.prioritizer;
 
-import comparer.test.ClosestToDifferingTestsComparer;
-import comparer.test.FarthestFromNoChange;
-import comparer.test.TestComparer;
-import model.ChangeMatrix;
-import model.DifferenceMatrix;
-import util.Util;
-import util.Variables;
+import orderbuilder.comparer.test.ClosestToDifferingTestsComparer;
+import orderbuilder.comparer.test.FarthestFromNoChange;
+import orderbuilder.comparer.test.TestComparer;
+import orderbuilder.model.ChangeMatrix;
+import orderbuilder.model.DifferenceMatrix;
+import orderbuilder.util.Util;
+import orderbuilder.util.Variables;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class Prioritizer {
 
     public static LinkedList<String> getExecutionOrder(ChangeMatrix change, DifferenceMatrix diff, HashMap<String, Object> criteria) throws Exception {
-        // get the right comparer
+        // get the right orderbuilder.comparer
         TestComparer comparer = getComparer(criteria);
         return comparer.getExecutionOrder(change, diff, criteria);
     }

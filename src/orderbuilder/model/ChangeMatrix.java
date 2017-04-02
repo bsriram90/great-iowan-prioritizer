@@ -1,8 +1,7 @@
-package model;
+package orderbuilder.model;
 
-import util.Util;
+import orderbuilder.util.Util;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;

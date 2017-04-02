@@ -1,4 +1,4 @@
-package model;
+package orderbuilder.model;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
-package preprocess;
+package orderbuilder.preprocess;
 
-import comparer.string.StringDifference;
+import orderbuilder.comparer.string.StringDifference;
 
 import java.io.*;
 import java.util.ArrayList;

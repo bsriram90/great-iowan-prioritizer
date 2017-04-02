@@ -1,4 +1,4 @@
-package util;
+package orderbuilder.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -43,7 +43,7 @@ public class Util {
 
     public static HashMap<String,Object> getDefaultPrioritizerCriteria() {
         HashMap<String,Object> criteria = new HashMap<>();
-        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD,Variables.FARTHEST_FROM_NO_CHANGE);
+        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD,Variables.CLOSEST_TO_CHANGE);
         criteria.put(Variables.THRESHOLD, 1000l);
         criteria.put(Variables.DEBUG, true);
         return criteria;

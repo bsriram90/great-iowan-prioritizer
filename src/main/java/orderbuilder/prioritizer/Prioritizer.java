@@ -4,7 +4,7 @@ import orderbuilder.comparer.test.CTDTBackTrackComparer;
 import orderbuilder.comparer.test.CTDTComparer;
 import orderbuilder.comparer.test.FarthestFromNoChange;
 import orderbuilder.comparer.test.TestComparer;
-import orderbuilder.evaluator.Results;
+import orderbuilder.evaluator.ResultMatrix;
 import orderbuilder.model.ChangeMatrix;
 import orderbuilder.model.DifferenceMatrix;
 import orderbuilder.util.Util;
@@ -42,7 +42,7 @@ public class Prioritizer {
         DifferenceMatrix<Long> diffMatrix = new DifferenceMatrix<>("./res/v2/differenceMatrix-v2.csv", Long.class);
         ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/v2-v3.csv", Long.class);
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
-        Results results = new Results();
+        ResultMatrix resultMatrix = new ResultMatrix();
         List<String> referenceResults = new ArrayList<>();
         referenceResults.add("TestDifficultSituations.txt");
         referenceResults.add("TestTextAcess.txt");
@@ -52,7 +52,7 @@ public class Prioritizer {
         referenceResults.add("TestTokenProperties.txt");
         referenceResults.add("TestExceptionsList.txt");
         referenceResults.add("TestJavaTokeninzing.txt");
-        results.setReferenceResult(referenceResults);
+        resultMatrix.setReferenceResult(referenceResults);
         LinkedList<String> order = null;
         for (long i = 0; i < changeMatrix.getSize(); i += 1) {
             criteria.put(Variables.THRESHOLD_2, i);
@@ -60,10 +60,10 @@ public class Prioritizer {
                 criteria.put(Variables.THRESHOLD_3, j);
                 order = Prioritizer.getExecutionOrder(changeMatrix, diffMatrix, criteria);
                 String id = "T2-" + i + "-T3-" + j;
-                results.addResult(id, order);
+                resultMatrix.addResult(id, order);
             }
         }
-        results.printOrderedResults();
+        resultMatrix.printOrderedResults();
     }
 
 

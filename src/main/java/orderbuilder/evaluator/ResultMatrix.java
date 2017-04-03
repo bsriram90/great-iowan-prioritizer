@@ -2,23 +2,18 @@ package orderbuilder.evaluator;
 
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Sriram on 02-04-2017.
  */
-public class Results {
+public class ResultMatrix {
     private List<String> referenceResult;
-    private List<List<String>> results;
-    private HashMap<String, String> resultsId;
+    private List<Result> results;
     private HashMap<String, Integer> testAndIndex = new HashMap<>();
 
-    public Results() {
+    public ResultMatrix() {
         results = new ArrayList<>();
-        resultsId = new HashMap<>();
     }
 
     public List<String> getReferenceResult() {
@@ -33,15 +28,14 @@ public class Results {
     }
 
     public void addResult(String id, List<String> order) {
-        resultsId.put(getIndexConvertedString(order), id);
-        results.add(order);
+        results.add(new Result(id, order));
     }
 
-    public List<List<String>> getResults() {
+    public List<Result> getResults() {
         return results;
     }
 
-    public void setResults(List<List<String>> results) {
+    public void setResults(List<Result> results) {
         this.results = results;
     }
 
@@ -54,27 +48,28 @@ public class Results {
     }
 
     public void printOrderedResults() {
-        System.out.print("Reference Order :\t");
+        System.out.print("Reference :\t");
         for (String test : referenceResult) {
             System.out.print(test + "\t");
         }
+        Collections.sort(results, new LevenstienComparator());
         System.out.print(System.lineSeparator());
-        for (List<String> res : results) {
-            System.out.print(resultsId.get(getIndexConvertedString(res) + ":\t"));
-            for (String test : res) {
+        for (Result res : results) {
+            System.out.print(res.getId() + ":\t");
+            for (String test : res.getOrder()) {
                 System.out.print(test + "\t");
             }
             System.out.print(System.lineSeparator());
         }
     }
 
-    class LevenstienComparator implements Comparator<List<String>> {
+    class LevenstienComparator implements Comparator<Result> {
 
         @Override
-        public int compare(List<String> o1, List<String> o2) {
+        public int compare(Result o1, Result o2) {
             String referenceString = getIndexConvertedString(referenceResult);
-            String string1 = getIndexConvertedString(o1);
-            String string2 = getIndexConvertedString(o2);
+            String string1 = getIndexConvertedString(o1.getOrder());
+            String string2 = getIndexConvertedString(o2.getOrder());
             LevenshteinDistance editDist = new LevenshteinDistance();
             Integer distance1 = editDist.apply(referenceString, string1);
             Integer distance2 = editDist.apply(referenceString, string2);

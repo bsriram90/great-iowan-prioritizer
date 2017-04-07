@@ -1,12 +1,13 @@
 package orderbuilder.comparer.test;
 
 import orderbuilder.model.ChangeMatrix;
-import orderbuilder.model.DifferenceMatrix;
+import orderbuilder.model.differenceMatrix.DifferenceMatrix;
 import orderbuilder.util.Util;
 import orderbuilder.util.Variables;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -18,7 +19,8 @@ public class CTDTComparer extends TestComparer {
     Logger logger = Logger.getLogger(CTDTComparer.class.getName());
 
     @Override
-    public LinkedList<String> getExecutionOrder(ChangeMatrix change, DifferenceMatrix diff, HashMap<String, Object> criteria) throws Exception {
+    public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff1, HashMap<String, Object> criteria) throws Exception {
+        DifferenceMatrix diff = diff1.get(0);
         boolean debug = (boolean) criteria.get(Variables.DEBUG);
         if (debug) {
             logger.info("Building execution order based on tests closest to differing tests with threshold - " + criteria.get(Variables.THRESHOLD_1));

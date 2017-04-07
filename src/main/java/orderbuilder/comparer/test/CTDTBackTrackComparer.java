@@ -1,11 +1,12 @@
 package orderbuilder.comparer.test;
 
 import orderbuilder.model.ChangeMatrix;
-import orderbuilder.model.DifferenceMatrix;
+import orderbuilder.model.differenceMatrix.DifferenceMatrix;
 import orderbuilder.util.Variables;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -20,7 +21,8 @@ public class CTDTBackTrackComparer extends CTDTComparer {
     Logger logger = Logger.getLogger(TestComparer.class.getName());
 
     @Override
-    public LinkedList<String> getExecutionOrder(ChangeMatrix change, DifferenceMatrix diff, HashMap<String, Object> criteria) throws Exception {
+    public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff1, HashMap<String, Object> criteria) throws Exception {
+        DifferenceMatrix diff = diff1.get(0);
         boolean debug = (boolean) criteria.get(Variables.DEBUG);
         Long differenceThreshold = (Long) criteria.get(Variables.THRESHOLD_1);
         Long backTrackThreshold = (Long) criteria.get(Variables.THRESHOLD_2);

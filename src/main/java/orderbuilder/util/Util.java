@@ -43,7 +43,7 @@ public class Util {
 
     public static HashMap<String, Object> getDefaultPrioritizerCriteria() {
         HashMap<String, Object> criteria = new HashMap<>();
-        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD, Variables.CLOSEST_TO_CHANGE_BACKTRACK);
+        criteria.put(Variables.PRIORITIZER_SEARCH_METHOD, Variables.CLOSEST_TO_CHANGE_TRACE_COMPARER);
         criteria.put(Variables.THRESHOLD_1, 1000l);
         criteria.put(Variables.THRESHOLD_2, 2l);
         criteria.put(Variables.THRESHOLD_3, 100l);

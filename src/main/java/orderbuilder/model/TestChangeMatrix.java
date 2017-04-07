@@ -11,12 +11,18 @@ public abstract class TestChangeMatrix<T> {
     protected Map<String, Integer> testIndex = new HashMap<>();
     protected Map<Integer, String> indexTest = new HashMap<>();
     protected Class<T> typeOfT;
+    protected String version;
 
     public TestChangeMatrix(String fileName, Class<T> type) throws Exception {
+        this(fileName, type, null);
+    }
+
+    public TestChangeMatrix(String fileName, Class<T> type, String version) throws Exception {
         if (!(type == Long.class || type == Double.class)) {
             throw new Exception("Invalid datatype. Only long and double supported");
         }
         typeOfT = type;
+        this.version = version;
     }
 
     public T[][] getMatrix() {

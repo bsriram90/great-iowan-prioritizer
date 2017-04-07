@@ -1,5 +1,6 @@
-package orderbuilder.model;
+package orderbuilder.model.differenceMatrix;
 
+import orderbuilder.model.TestChangeMatrix;
 import orderbuilder.util.Util;
 
 import java.util.List;
@@ -11,7 +12,11 @@ import java.util.Set;
 public class DifferenceMatrix<T> extends TestChangeMatrix {
 
     public DifferenceMatrix(String fileName, Class<T> type) throws Exception {
-        super(fileName, type);
+        this(fileName, type, null);
+    }
+
+    public DifferenceMatrix(String fileName, Class<T> type, String version) throws Exception {
+        super(fileName, type, version);
         List<String> lines = Util.getLinesFromFile(fileName);
         String[] headers = lines.get(0).split(",");
         this.size = headers.length - 1;

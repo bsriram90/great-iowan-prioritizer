@@ -1,7 +1,6 @@
 package orderbuilder.model.differenceMatrix;
 
 import orderbuilder.util.Util;
-import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -16,7 +15,7 @@ public class ExtendedDifferenceMatrix<T> extends DifferenceMatrix {
     public ExtendedDifferenceMatrix(String fileName, Class type, String version) throws Exception {
         super(fileName, type, version);
         trace = new HashMap<>();
-        String tracePath = "res/" + version;
+        String tracePath = "res/xml-security/" + version;
         File dir = new File(tracePath);
         String[] files = dir.list(new FilenameFilter() {
             @Override
@@ -26,7 +25,15 @@ public class ExtendedDifferenceMatrix<T> extends DifferenceMatrix {
         });
         int i=0;
         for(String file : files) {
-            trace.put(file, Util.getLinesFromFile(tracePath + "/" + file));
+            List<String> testTrace = Util.getLinesFromFile(tracePath + "/" + file);
+            Iterator<String> itr = testTrace.iterator();
+            while (itr.hasNext()) {
+                String line = itr.next();
+                if (line.contains("init")) {
+                    itr.remove();
+                }
+            }
+            trace.put(file, testTrace);
         }
     }
 
@@ -48,12 +55,13 @@ public class ExtendedDifferenceMatrix<T> extends DifferenceMatrix {
         if(candidates.size() == 0) {
             return null;
         }
-        float similarity = Float.MAX_VALUE;
+        float similarity = -Float.MIN_VALUE;
         String closestTest = null;
         while (itr.hasNext()) {
             String test = itr.next();
-            if(jaccardSimilarity(trace, getTraceForTest(test)) < similarity) {
-                similarity = jaccardSimilarity(trace, getTraceForTest(test));
+            float jacSim = jaccardSimilarity(trace, getTraceForTest(test));
+            if (jacSim >= similarity) {
+                similarity = jacSim;
                 closestTest = test;
             }
         }

@@ -40,23 +40,15 @@ public class Prioritizer {
 
     public static void main(String[] args) throws Exception {
         List<DifferenceMatrix> diffList = new ArrayList<>();
-        DifferenceMatrix<Long> diffMatrix = new DifferenceMatrix<>("./res/v2/differenceMatrix-v2.csv", Long.class);
-        ExtendedDifferenceMatrix<Long> extDiff1 = new ExtendedDifferenceMatrix<>("./res/v2/differenceMatrix-v2.csv", Long.class, "v2");
-        ExtendedDifferenceMatrix<Long> extDiff2 = new ExtendedDifferenceMatrix<>("./res/v3/differenceMatrix-v3.csv", Long.class, "v3");
+        // DifferenceMatrix<Long> diffMatrix = new DifferenceMatrix<>("./res/v2/differenceMatrix-v2.csv", Long.class);
+        ExtendedDifferenceMatrix<Long> extDiff1 = new ExtendedDifferenceMatrix<>("./res/xml-security/v2/differenceMatrix.csv", Long.class, "v2");
+        ExtendedDifferenceMatrix<Long> extDiff2 = new ExtendedDifferenceMatrix<>("./res/xml-security/v3/differenceMatrix.csv", Long.class, "v3");
         diffList.add(extDiff1);
         diffList.add(extDiff2);
-        ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/v2-v3.csv", Long.class);
+        ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/xml-security/v2-v3.csv", Long.class);
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
         ResultMatrix resultMatrix = new ResultMatrix();
-        List<String> referenceResults = new ArrayList<>();
-        referenceResults.add("TestDifficultSituations.txt");
-        referenceResults.add("TestTextAcess.txt");
-        referenceResults.add("TestEmbeddedTokenizer.txt");
-        referenceResults.add("TestTokenizerProperties.txt");
-        referenceResults.add("TestExceptions.txt");
-        referenceResults.add("TestTokenProperties.txt");
-        referenceResults.add("TestExceptionsList.txt");
-        referenceResults.add("TestJavaTokeninzing.txt");
+        List<String> referenceResults = changeMatrix.getTestsByChangeAsc();
         resultMatrix.setReferenceResult(referenceResults);
         LinkedList<String> order = null;
         order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria);

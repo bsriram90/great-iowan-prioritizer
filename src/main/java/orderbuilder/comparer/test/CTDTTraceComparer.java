@@ -60,8 +60,13 @@ public class CTDTTraceComparer extends TestComparer {
             }
         }
         List<String> difference = new ArrayList<>();
-        difference.addAll(currTrace.subList(differenceIndex,currTrace.size()));
-        return difference;
+        difference.addAll(currTrace.subList(0, differenceIndex));
+        List<String> temp1 = new ArrayList<>(prevTrace);
+        temp1.removeAll(currTrace);
+        List<String> temp2 = new ArrayList<>(currTrace);
+        temp2.removeAll(prevTrace);
+        temp1.addAll(temp2);
+        return temp1;
     }
 
 

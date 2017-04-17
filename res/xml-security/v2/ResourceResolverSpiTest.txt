@@ -1,0 +1,6 @@
+org.apache.xml.security.test.utils.resolver.ResourceResolverSpiTest.testExpandSystemId_1
+org.apache.xml.security.utils.resolver.ResourceResolverSpi.expandSystemId
+org.apache.xml.security.test.utils.resolver.ResourceResolverSpiTest.testExpandSystemId_2
+org.apache.xml.security.utils.resolver.ResourceResolverSpi.expandSystemId
+org.apache.xml.security.utils.resolver.ResourceResolverSpi.fixURI
+org.apache.xml.security.utils.resolver.ResourceResolverSpi.fixURI

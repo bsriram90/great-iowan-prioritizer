@@ -115,6 +115,6 @@ public class BuildDifferenceMatrix {
     }
 
     public static void main(String[] args) throws Exception {
-        BuildDifferenceMatrix matrix = new BuildDifferenceMatrix("C:\\Users\\Sriram\\Desktop\\RA\\call_traces\\");
+        BuildDifferenceMatrix matrix = new BuildDifferenceMatrix("res/xml-security/");
     }
 }

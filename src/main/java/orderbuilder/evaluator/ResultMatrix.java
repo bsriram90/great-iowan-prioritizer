@@ -55,12 +55,19 @@ public class ResultMatrix {
         Collections.sort(results, new LevenstienComparator());
         System.out.print(System.lineSeparator());
         for (Result res : results) {
-            System.out.print(res.getId() + ":\t");
+            System.out.print(res.getId() + ":\t" + getLevenstienDistance(res) + " -\t");
             for (String test : res.getOrder()) {
-                System.out.print(test + "\t");
+                System.out.print(testAndIndex.get(test) + 1 + "\t");
             }
             System.out.print(System.lineSeparator());
         }
+    }
+
+    public Integer getLevenstienDistance(Result res) {
+        LevenshteinDistance editDist = new LevenshteinDistance();
+        String string1 = getIndexConvertedString(res.getOrder());
+        String referenceString = getIndexConvertedString(referenceResult);
+        return editDist.apply(referenceString, string1);
     }
 
     class LevenstienComparator implements Comparator<Result> {

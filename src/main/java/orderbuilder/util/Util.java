@@ -1,8 +1,6 @@
 package orderbuilder.util;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -49,5 +47,23 @@ public class Util {
         criteria.put(Variables.THRESHOLD_3, 100l);
         criteria.put(Variables.DEBUG, false);
         return criteria;
+    }
+
+    public static String[] getAllDirectories(File root) {
+        return root.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File current, String name) {
+                return new File(current, name).isDirectory();
+            }
+        });
+    }
+
+    public static String[] getAllFiles(File dir) {
+        return dir.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File current, String name) {
+                return new File(current, name).isFile() && name.contains(".txt");
+            }
+        });
     }
 }

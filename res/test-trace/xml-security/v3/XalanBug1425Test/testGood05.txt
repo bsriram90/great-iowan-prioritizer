@@ -1,0 +1,2 @@
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testGood05
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement

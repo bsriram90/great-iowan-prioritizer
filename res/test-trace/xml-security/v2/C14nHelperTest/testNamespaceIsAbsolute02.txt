@@ -1,0 +1,2 @@
+org.apache.xml.security.test.c14n.helper.C14nHelperTest.testNamespaceIsAbsolute02
+org.apache.xml.security.c14n.helper.C14nHelper.namespaceIsAbsolute

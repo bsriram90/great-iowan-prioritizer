@@ -1,0 +1,5 @@
+org.apache.xml.security.test.signature.XMLSignatureInputTest.testOctetStreamIsNotNodeSet
+org.apache.xml.security.utils.JavaUtils.getBytesFromStream
+org.apache.xml.security.signature.XMLSignatureInput.<init>
+org.apache.xml.security.signature.XMLSignatureInput.<init>
+org.apache.xml.security.signature.XMLSignatureInput.isNodeSet

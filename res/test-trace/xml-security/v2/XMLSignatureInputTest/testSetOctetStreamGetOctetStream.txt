@@ -1,0 +1,6 @@
+org.apache.xml.security.test.signature.XMLSignatureInputTest.testSetOctetStreamGetOctetStream
+org.apache.xml.security.utils.JavaUtils.getBytesFromStream
+org.apache.xml.security.signature.XMLSignatureInput.<init>
+org.apache.xml.security.signature.XMLSignatureInput.<init>
+org.apache.xml.security.signature.XMLSignatureInput.getOctetStream
+org.apache.xml.security.signature.XMLSignatureInput.isOctetStream

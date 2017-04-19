@@ -1,0 +1,6 @@
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.AttributeAncestorOrSelf.test01
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.AttributeAncestorOrSelf.isAncestorOf
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.AttributeAncestorOrSelf.test02
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.AttributeAncestorOrSelf.isAncestorOf
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.AttributeAncestorOrSelf.test03
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.AttributeAncestorOrSelf.isAncestorOf

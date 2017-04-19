@@ -1,0 +1,16 @@
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testBad01
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testBad02
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testBad03
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testGood01
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testGood02
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testGood03
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testGood04
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.testGood05
+org.apache.xml.security.test.external.org.apache.xalan.XPathAPI.XalanBug1425Test.containsDocumentElement

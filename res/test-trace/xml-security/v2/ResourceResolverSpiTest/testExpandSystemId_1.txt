@@ -1,0 +1,2 @@
+org.apache.xml.security.test.utils.resolver.ResourceResolverSpiTest.testExpandSystemId_1
+org.apache.xml.security.utils.resolver.ResourceResolverSpi.expandSystemId

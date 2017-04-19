@@ -1,0 +1,11 @@
+org.apache.xml.security.test.signature.XMLSignatureInputTest.testNodeSetIsNotOctetStream
+org.apache.xml.security.test.signature.XMLSignatureInputTest.getNodeSet1
+org.apache.xml.security.utils.XMLUtils.circumventBug2650
+org.apache.xml.security.utils.XMLUtils.circumventBug2650recurse
+org.apache.xml.security.utils.XMLUtils.circumventBug2650recurse
+org.apache.xml.security.utils.XMLUtils.circumventBug2650recurse
+org.apache.xml.security.utils.XMLUtils.circumventBug2650recurse
+org.apache.xml.security.utils.XMLUtils.circumventBug2650recurse
+org.apache.xml.security.utils.XMLUtils.convertNodelistToSet
+org.apache.xml.security.signature.XMLSignatureInput.<init>
+org.apache.xml.security.signature.XMLSignatureInput.isOctetStream

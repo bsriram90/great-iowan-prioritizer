@@ -2,10 +2,7 @@ package orderbuilder.model;
 
 import orderbuilder.util.Util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -46,7 +43,7 @@ public class ChangeMatrix<T> extends TestChangeMatrix {
                 System.getProperty("user.dir"));
         ChangeMatrix<Long> matrix = new ChangeMatrix<>("./res/xml-security/v2-v3.csv", Long.class);
         matrix.printMatrix();
-        List<String> sorted = matrix.getTestsByChangeAsc();
+        List<String> sorted = matrix.getTestsByChangeDesc();
         for (String s : sorted) {
             System.out.println(s);
         }
@@ -62,7 +59,7 @@ public class ChangeMatrix<T> extends TestChangeMatrix {
         System.out.print(System.lineSeparator());
     }
 
-    public List<String> getTestsByChangeAsc() {
+    public List<String> getTestsByChangeDesc() {
         List<String> order = new ArrayList<>();
         TreeMap<Long, String> sorter = new TreeMap<>();
         for (Object test : testIndex.keySet()) {
@@ -77,6 +74,7 @@ public class ChangeMatrix<T> extends TestChangeMatrix {
         for (Long key : keys) {
             order.add(sorter.get(key));
         }
+        Collections.reverse(order);
         return order;
     }
 

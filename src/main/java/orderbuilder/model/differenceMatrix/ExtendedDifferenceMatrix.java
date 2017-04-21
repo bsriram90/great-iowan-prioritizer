@@ -59,7 +59,7 @@ public class ExtendedDifferenceMatrix<T> extends DifferenceMatrix {
         String closestTest = null;
         while (itr.hasNext()) {
             String test = itr.next();
-            float jacSim = jaccardSimilarity(trace, getTraceForTest(test));
+            float jacSim = Util.jaccardSimilarity(trace, getTraceForTest(test));
             if (jacSim >= similarity) {
                 similarity = jacSim;
                 closestTest = test;
@@ -68,16 +68,5 @@ public class ExtendedDifferenceMatrix<T> extends DifferenceMatrix {
         return closestTest;
     }
 
-    private float jaccardSimilarity(Collection<String> a, Collection<String> b) {
-        Set<String> union = new HashSet<String>();
-        union.addAll(a);
-        union.addAll(b);
-        Set<String> intersection = new HashSet<String>();
-        for(String edge : a) {
-            if(b.contains(edge)) {
-                intersection.add(edge);
-            }
-        }
-        return (float) intersection.size() / (float) union.size();
-    }
+
 }

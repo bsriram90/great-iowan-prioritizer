@@ -16,4 +16,5 @@ public class Variables {
     public static final String THRESHOLD_2 = "threshold2";
     public static final String THRESHOLD_3 = "threshold3";
 
+    public static final String SIMILARITY_THRESHOLD = "similarityThreshold";
 }

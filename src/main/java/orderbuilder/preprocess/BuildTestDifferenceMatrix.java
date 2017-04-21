@@ -48,7 +48,7 @@ public class BuildTestDifferenceMatrix {
                     paths.put(file, filePath + "/" + file);
                 }
             }
-            /*Long[][] difference = new Long[testsInVersion.size()][testsInVersion.size()];
+            Long[][] difference = new Long[testsInVersion.size()][testsInVersion.size()];
             for(int j=0; j<testsInVersion.size(); j++) {
                 for (int k = 0; k < testsInVersion.size(); k++) {
                     difference[j][k] = new Long(0);
@@ -60,9 +60,9 @@ public class BuildTestDifferenceMatrix {
                         difference[j][k] = StringDifference.basicLineDifference(paths.get(testsInVersion.get(j)), paths.get(testsInVersion.get(k)));
                     }
                 }
-            }*/
+            }
             filePaths.add(paths);
-            //writeDifferenceMatrixToFile(versionPath, difference, testsInVersion);
+            writeDifferenceMatrixToFile(versionPath, difference, testsInVersion);
         }
         StringBuilder header = new StringBuilder("");
         StringBuilder body = new StringBuilder("");

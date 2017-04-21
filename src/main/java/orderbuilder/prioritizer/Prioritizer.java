@@ -48,7 +48,7 @@ public class Prioritizer {
         ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/xml-security/v2-v3.csv", Long.class);
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
         ResultMatrix resultMatrix = new ResultMatrix();
-        List<String> referenceResults = changeMatrix.getTestsByChangeAsc();
+        List<String> referenceResults = changeMatrix.getTestsByChangeDesc();
         resultMatrix.setReferenceResult(referenceResults);
         LinkedList<String> order = null;
         order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria);

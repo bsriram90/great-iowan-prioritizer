@@ -45,6 +45,7 @@ public class Util {
         criteria.put(Variables.THRESHOLD_1, 1000l);
         criteria.put(Variables.THRESHOLD_2, 2l);
         criteria.put(Variables.THRESHOLD_3, 100l);
+        criteria.put(Variables.SIMILARITY_THRESHOLD, 0.25);
         criteria.put(Variables.DEBUG, false);
         return criteria;
     }
@@ -65,5 +66,18 @@ public class Util {
                 return new File(current, name).isFile() && name.contains(".txt");
             }
         });
+    }
+
+    public static float jaccardSimilarity(Collection<String> a, Collection<String> b) {
+        Set<String> union = new HashSet<String>();
+        union.addAll(a);
+        union.addAll(b);
+        Set<String> intersection = new HashSet<String>();
+        for (String edge : a) {
+            if (b.contains(edge)) {
+                intersection.add(edge);
+            }
+        }
+        return (float) intersection.size() / (float) union.size();
     }
 }

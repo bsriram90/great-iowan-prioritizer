@@ -13,6 +13,12 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
 
     HashMap<String, HashMap<String, List<String>>> testcaseTraces = new HashMap<>();
     HashMap<String, String> testDirectory = new HashMap<>();
+    Integer numOfTestCases = 0;
+    Integer numOfTests = 0;
+
+    public Set<String> getAllTests() {
+        return new HashSet<>(testDirectory.keySet());
+    }
 
     public HashMap<String, HashMap<String, List<String>>> getTestcaseTraces() {
         return testcaseTraces;
@@ -31,8 +37,28 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
         this(fileName, type, version, "");
     }
 
+    public List<String> getTraceForTest(String test) {
+        return testcaseTraces.get(getTestCaseByTest(test)).get(test);
+    }
+
     public Set<String> getAllTestsForTestCase(String testCase) {
-        return testcaseTraces.get(testCase).keySet();
+        return new HashSet<>(testcaseTraces.get(testCase).keySet());
+    }
+
+    public Integer getNumOfTestCases() {
+        return numOfTestCases;
+    }
+
+    public void setNumOfTestCases(Integer numOfTestCases) {
+        this.numOfTestCases = numOfTestCases;
+    }
+
+    public Integer getNumOfTests() {
+        return numOfTests;
+    }
+
+    public void setNumOfTests(Integer numOfTests) {
+        this.numOfTests = numOfTests;
     }
 
     public TestTraceDifferenceMatrix(String fileName, Class type, String version, String path) throws Exception {
@@ -46,12 +72,15 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
             HashMap<String, List<String>> testTraces = new HashMap<>();
             for (String test : tests) {
                 List<String> trace = Util.getLinesFromFile(tracePath + "/" + dir + "/" + test);
+                numOfTests++;
+
                 // TODO fold over recursion
                 testTraces.put(test, trace);
                 testDirectory.put(test, dir);
             }
             testcaseTraces.put(dir, testTraces);
         }
+        numOfTestCases += testcaseTraces.size();
     }
 
     public String getTestCaseByTest(String test) {
@@ -65,7 +94,7 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
 
     public List<String> getOrderedClosestTestsInTestCase(String currentTest, Long threshold, String currentTestCase, Collection<String> excludeTests, ChangeMatrix<Long> change) {
         List<String> order = new LinkedList<>();
-        HashMap<String, List<String>> traces = testcaseTraces.get(currentTestCase);
+        HashMap<String, List<String>> traces = new HashMap<>(testcaseTraces.get(currentTestCase));
         List<String> currentTrace = traces.get(currentTest);
         traces.keySet().removeAll(excludeTests);
         traces.remove(currentTest);
@@ -77,7 +106,7 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
         Collections.sort(traceFitness);
         Iterator<TestSimilarity> itr = traceFitness.iterator();
         boolean pathStillFit = true;
-        while (pathStillFit) {
+        while (pathStillFit && itr.hasNext()) {
             String nextTest = itr.next().test;
             order.add(nextTest);
             if (change.getChangeByTest(nextTest) <= threshold) {

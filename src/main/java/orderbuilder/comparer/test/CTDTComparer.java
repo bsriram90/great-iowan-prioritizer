@@ -26,7 +26,7 @@ public class CTDTComparer extends TestComparer {
             logger.info("Building execution order based on tests closest to differing tests with threshold - " + criteria.get(Variables.THRESHOLD_1));
         }
         // find the point in which the test starts to differ significantly from previous version
-        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, (Long) criteria.get(Variables.THRESHOLD_1), debug);
+        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, (Long) criteria.get(Variables.THRESHOLD_1), debug, null);
         String differingTest = (String) results[0];
         LinkedList<String> order = (LinkedList<String>) results[1];
         // if nothing changed enough, return here

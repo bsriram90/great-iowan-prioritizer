@@ -31,7 +31,7 @@ public class CTDTTraceComparer extends TestComparer {
         } else {
             throw new Exception("TraceComparer required ExtendedDifferenceMatrix");
         }
-        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger,change,null,(Long)criteria.get(Variables.THRESHOLD_1),debug);
+        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, (Long) criteria.get(Variables.THRESHOLD_1), debug, null);
         String differingTest = (String) results[0];
         LinkedList<String> order = (LinkedList<String>) results[1];
         // if nothing changed enough, return here

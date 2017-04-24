@@ -29,7 +29,7 @@ public class CTDTBackTrackComparer extends CTDTComparer {
         Long pathFitness = (Long) criteria.get(Variables.THRESHOLD_3);
         // TODO implement debug logging
         // find the point in which the test starts to differ significantly from previous version
-        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug);
+        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, null);
         String differingTest = (String) results[0];
         LinkedList<String> newOrder = (LinkedList<String>) results[1];
         // if nothing changed enough, return here

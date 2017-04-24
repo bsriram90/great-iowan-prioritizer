@@ -3,6 +3,7 @@ package orderbuilder.comparer.test;
 import orderbuilder.model.ChangeMatrix;
 import orderbuilder.model.differenceMatrix.DifferenceMatrix;
 import orderbuilder.model.differenceMatrix.TestTraceDifferenceMatrix;
+import orderbuilder.util.Util;
 import orderbuilder.util.Variables;
 
 import java.util.*;
@@ -23,7 +24,7 @@ public class TestTraceComparer extends TestComparer {
         Long differenceThreshold = (Long) criteria.get(Variables.THRESHOLD_1);
         Long backTrackThreshold = (Long) criteria.get(Variables.THRESHOLD_2);
         Long pathFitness = (Long) criteria.get(Variables.THRESHOLD_3);
-        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug);
+        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, null);
         String differingTest = (String) results[0];
         LinkedList<String> newOrder = (LinkedList<String>) results[1];
         // if nothing changed enough, return here
@@ -38,35 +39,63 @@ public class TestTraceComparer extends TestComparer {
         coreTests.add(differingTest);
         String currentTest = differingTest;
         String currentTestCase = prev.getTestCaseByTest(differingTest);
+        testCasesCovered.add(currentTestCase);
         while (newOrder.size() < change.getSize()) {
-            List<String> insideTestCaseOrder = prev.getOrderedClosestTestsInTestCase(currentTest, pathFitness, currentTestCase, newOrder, change);
-            if (insideTestCaseOrder != null && insideTestCaseOrder.size() > 1) {
-                coreTests.add(currentTest);
-                newOrder.addAll(insideTestCaseOrder);
+            newOrder.add(currentTest);
+            if ((Long) change.getChangeByTest(currentTest) >= pathFitness) {
+                List<String> insideTestCaseOrder = prev.getOrderedClosestTestsInTestCase(currentTest, pathFitness, currentTestCase, newOrder, change);
+                if (insideTestCaseOrder != null && insideTestCaseOrder.size() >= 1) {
+                    coreTests.add(currentTest);
+                    newOrder.addAll(insideTestCaseOrder);
+                }
             }
-            currentTest = getNextTest(prev, change, testCasesCovered, coreTests, pathFitness);
-            testCasesCovered.add(prev.getTestCaseByTest(currentTest));
+            if (testCasesCovered.size() >= prev.getNumOfTestCases() && newOrder.size() < change.getSize()) {
+                testCasesCovered = new ArrayList<>();
+                coreTests = new ArrayList<>();
+                results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
+                newOrder.addAll((LinkedList<String>) results[1]);
+                currentTest = (String) results[0];
+            } else {
+                currentTest = getNextTest(prev, testCasesCovered, coreTests, newOrder);
+                if (currentTest == null) {
+                    testCasesCovered = new ArrayList<>();
+                    coreTests = new ArrayList<>();
+                    results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
+                    newOrder.addAll((LinkedList<String>) results[1]);
+                    currentTest = (String) results[0];
+                }
+            }
+            currentTestCase = prev.getTestCaseByTest(currentTest);
+            testCasesCovered.add(currentTestCase);
         }
         return newOrder;
     }
 
-    private String getNextTest(TestTraceDifferenceMatrix<Long> prev, ChangeMatrix<Long> change, List<String> excludeTestCase, List<String> coreTests, Long threshold) {
-        List<String> orderedByChange = change.getTestsByChangeDesc();
-
-        Set<String> excludeSet = new HashSet<>();
+    private String getNextTest(TestTraceDifferenceMatrix<Long> prev, List<String> excludeTestCase, List<String> coreTests, List<String> excludeTests) {
+        Set<String> candidates = prev.getAllTests();
+        if (excludeTests != null && excludeTests.size() > 1) {
+            candidates.removeAll(excludeTests);
+        }
+        candidates.removeAll(coreTests);
         for (String testCase : excludeTestCase) {
-            excludeSet.addAll(prev.getAllTestsForTestCase(testCase));
+            candidates.removeAll(prev.getAllTestsForTestCase(testCase));
         }
-        orderedByChange.removeAll(excludeSet);
-        while (orderedByChange.size() > 0) {
-            String test = orderedByChange.get(0);
-            if (change.getChangeByTest(test) <= threshold) {
-                String badTestCase = prev.getTestCaseByTest(test);
-                Set<String> badTests = prev.getAllTestsForTestCase(badTestCase);
-                orderedByChange.removeAll(badTests);
+        String closest = null;
+        Float dist = 0.0f;
+        for (String candidate : candidates) {
+            Float testFitness = 0.0f;
+            for (String coreTest : coreTests) {
+                testFitness += Util.jaccardSimilarity(prev.getTraceForTest(candidate), prev.getTraceForTest(coreTest));
             }
-            return test;
+            testFitness = testFitness / coreTests.size();
+            if (testFitness >= dist) {
+                closest = candidate;
+                dist = testFitness;
+            }
         }
-        return null;
+        if (closest == null) {
+            System.out.println("null");
+        }
+        return closest;
     }
 }

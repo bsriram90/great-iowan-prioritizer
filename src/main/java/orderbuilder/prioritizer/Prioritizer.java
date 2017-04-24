@@ -4,7 +4,7 @@ import orderbuilder.comparer.test.*;
 import orderbuilder.evaluator.ResultMatrix;
 import orderbuilder.model.ChangeMatrix;
 import orderbuilder.model.differenceMatrix.DifferenceMatrix;
-import orderbuilder.model.differenceMatrix.ExtendedDifferenceMatrix;
+import orderbuilder.model.differenceMatrix.TestTraceDifferenceMatrix;
 import orderbuilder.util.Util;
 import orderbuilder.util.Variables;
 
@@ -34,6 +34,8 @@ public class Prioritizer {
             comparer = new CTDTBackTrackComparer();
         } else if (criteria.get(Variables.PRIORITIZER_SEARCH_METHOD).equals(Variables.CLOSEST_TO_CHANGE_TRACE_COMPARER)) {
             comparer = new CTDTTraceComparer();
+        } else if (criteria.get(Variables.PRIORITIZER_SEARCH_METHOD).equals(Variables.TEST_TRACE)) {
+            comparer = new TestTraceComparer();
         }
         return comparer;
     }
@@ -41,11 +43,11 @@ public class Prioritizer {
     public static void main(String[] args) throws Exception {
         List<DifferenceMatrix> diffList = new ArrayList<>();
         // DifferenceMatrix<Long> diffMatrix = new DifferenceMatrix<>("./res/v2/differenceMatrix-v2.csv", Long.class);
-        ExtendedDifferenceMatrix<Long> extDiff1 = new ExtendedDifferenceMatrix<>("./res/xml-security/v2/differenceMatrix.csv", Long.class, "v2");
-        ExtendedDifferenceMatrix<Long> extDiff2 = new ExtendedDifferenceMatrix<>("./res/xml-security/v3/differenceMatrix.csv", Long.class, "v3");
+        TestTraceDifferenceMatrix<Long> extDiff1 = new TestTraceDifferenceMatrix<>("./res/test-trace/xml-security/v2/differenceMatrix-v2.csv", Long.class, "v2", "./res/test-trace/xml-security/");
+        TestTraceDifferenceMatrix<Long> extDiff2 = new TestTraceDifferenceMatrix<>("./res/test-trace/xml-security/v3/differenceMatrix-v3.csv", Long.class, "v3", "./res/test-trace/xml-security/");
         diffList.add(extDiff1);
         diffList.add(extDiff2);
-        ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/xml-security/v2-v3.csv", Long.class);
+        ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/test-trace/xml-security/changeMatrix.csv", Long.class);
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
         ResultMatrix resultMatrix = new ResultMatrix();
         List<String> referenceResults = changeMatrix.getTestsByChangeDesc();

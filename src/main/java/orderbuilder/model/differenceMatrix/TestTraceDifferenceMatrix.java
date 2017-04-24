@@ -74,7 +74,16 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
                 List<String> trace = Util.getLinesFromFile(tracePath + "/" + dir + "/" + test);
                 numOfTests++;
 
-                // TODO fold over recursion
+                Iterator<String> itr = trace.iterator();
+                String previous = "";
+                while (itr.hasNext()) {
+                    String line = itr.next();
+                    if (previous.equals(line)) {
+                        itr.remove();
+                    }
+                    previous = line;
+                }
+
                 testTraces.put(test, trace);
                 testDirectory.put(test, dir);
             }

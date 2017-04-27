@@ -57,7 +57,7 @@ public class BuildTestDifferenceMatrix {
             for(int j=0; j<testsInVersion.size(); j++) {
                 for(int k=j+1; k<testsInVersion.size(); k++) {
                     if(j != k) {
-                        difference[j][k] = StringDifference.basicLineDifference(paths.get(testsInVersion.get(j)), paths.get(testsInVersion.get(k)));
+                        difference[j][k] = StringDifference.positionalDissimilarityScore(paths.get(testsInVersion.get(j)), paths.get(testsInVersion.get(k)),true);
                     }
                 }
             }
@@ -75,11 +75,11 @@ public class BuildTestDifferenceMatrix {
             if (path1 == null || path1.trim().equals("") || path2 == null || path2.trim().equals("")) {
                 body.append("NA,");
             } else {
-                body.append(StringDifference.basicLineDifference(path1, path2) + ",");
+                body.append(StringDifference.positionalDissimilarityScore(path1, path2,true) + ",");
             }
         }
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + "\\" + "changeMatrix.csv", false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + "/" + "pos-w-changeMatrix.csv", false));
             writer.append(header.toString().substring(0, header.length() - 1));
             writer.newLine();
             writer.append(body.toString().substring(0, body.length() - 1));
@@ -92,7 +92,7 @@ public class BuildTestDifferenceMatrix {
 
     private void writeDifferenceMatrixToFile(String versionPath, Long[][] difference, List<String> testsInVersion) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(versionPath + "\\" + "differenceMatrix.csv", false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(versionPath + "/" + "pos-w-differenceMatrix.csv", false));
             StringBuilder row = new StringBuilder("Files");
             for (String file : testsInVersion) {
                 row.append("," + file);

@@ -41,7 +41,41 @@ public class StringDifference {
         return difference;
     }
 
-    public static long basicLineDifference(String file1, String file2) {
+    public static long positionalDissimilarityScore(List<String> text1, List<String> text2, boolean weighted) {
+        Long score = 0l;
+        List<String> longer = null;
+        List<String> shorter = null;
+        if(text1.size() > text2.size()) {
+            longer = text1;
+            shorter = text2;
+        } else {
+            longer = text2;
+            shorter = text1;
+        }
+        for(int i=0; i<shorter.size(); i++) {
+            if(!longer.get(i).equals(shorter.get(i))) {
+                if(weighted) {
+                    score += (longer.size() - i);
+                } else {
+                    score ++;
+                }
+            }
+        }
+        int n = longer.size() - shorter.size();
+        if(weighted) {
+            n = ((n * (n + 1))/ 2);
+        } else {
+            score += n;
+        }
+        return score;
+    }
+
+    public static long positionalDissimilarityScore(String text1, String text2, boolean weighted) {
+        return positionalDissimilarityScore(Util.getLinesFromFile(text1),Util.getLinesFromFile(text2), weighted);
+    }
+
+
+        public static long basicLineDifference(String file1, String file2) {
         return basicLineDifference(Util.getLinesFromFile(file1), Util.getLinesFromFile(file2));
     }
 }

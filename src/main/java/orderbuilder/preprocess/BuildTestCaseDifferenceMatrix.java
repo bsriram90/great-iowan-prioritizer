@@ -37,12 +37,13 @@ public class BuildTestCaseDifferenceMatrix {
             for (int k = 0; k < files.length; k++) {
                 for (int l = k + 1; l < files.length; l++) {
                     if (k != l) {
-                        differenceMatrix[k][l] = StringDifference.basicLineDifference(TRACE_FILES_DIRECTORY + directory + "\\" + files[k], TRACE_FILES_DIRECTORY + directory + "\\" + files[l]);
+                        differenceMatrix[k][l] = StringDifference.positionalDissimilarityScore(TRACE_FILES_DIRECTORY + directory + "\\" + files[k], TRACE_FILES_DIRECTORY + directory + "\\" + files[l],false);
+                        //differenceMatrix[k][l] = StringDifference.basicLineDifference(TRACE_FILES_DIRECTORY + directory + "\\" + files[k], TRACE_FILES_DIRECTORY + directory + "\\" + files[l]);
                     }
                 }
             }
             try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + directory + "\\" + "differenceMatrix.csv", false));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + directory + "\\" + "pos-uw-differenceMatrix.csv", false));
                 StringBuilder row = new StringBuilder("Files,");
                 for (String file : files) {
                     row.append(file + ",");
@@ -74,12 +75,13 @@ public class BuildTestCaseDifferenceMatrix {
                         if (outerFile.equals(file)) {
                             String file1 = TRACE_FILES_DIRECTORY + allDirectories[i] + "\\" + files[k];
                             String file2 = TRACE_FILES_DIRECTORY + allDirectories[j] + "\\" + file;
-                            versionDifference[k] = StringDifference.basicLineDifference(file1, file2);
+                            // versionDifference[k] = StringDifference.basicLineDifference(file1, file2);
+                            versionDifference[k] = StringDifference.positionalDissimilarityScore(file1, file2, false);
                         }
                     }
                 }
                 try {
-                    String fileName = allDirectories[i] + "-" + allDirectories[j] + ".csv";
+                    String fileName = "pos-uw-" + allDirectories[i] + "-" + allDirectories[j] + ".csv";
                     BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + "\\" + fileName, false));
                     StringBuilder row = new StringBuilder("");
                     for (String file : files) {

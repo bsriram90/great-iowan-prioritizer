@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class CTDTComparer extends TestComparer {
 
-    Logger logger = Logger.getLogger(CTDTComparer.class.getName());
+    static Logger logger = Logger.getLogger(CTDTComparer.class.getName());
 
     @Override
     public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff1, HashMap<String, Object> criteria) throws Exception {
@@ -52,7 +52,7 @@ public class CTDTComparer extends TestComparer {
         return newOrder;
     }
 
-    private String getNextTest(String test, DifferenceMatrix differenceMatrix, boolean debug) {
+    public static String getNextTest(String test, DifferenceMatrix differenceMatrix, boolean debug) {
         if (debug) {
             logger.info("Looking for tests closest to test - " + test);
         }

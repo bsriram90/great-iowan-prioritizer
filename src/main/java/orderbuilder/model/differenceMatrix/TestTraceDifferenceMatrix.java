@@ -102,7 +102,7 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
     }
 
     public List<String> getOrderedClosestTestsInTestCase(String currentTest, Long threshold, String currentTestCase, Collection<String> excludeTests, ChangeMatrix<Long> change) {
-        List<String> order = new LinkedList<>();
+        /*
         HashMap<String, List<String>> traces = new HashMap<>(testcaseTraces.get(currentTestCase));
         List<String> currentTrace = traces.get(currentTest);
         traces.keySet().removeAll(excludeTests);
@@ -112,11 +112,14 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
             TestSimilarity sim = new TestSimilarity(test, Util.jaccardSimilarity(traces.get(test), currentTrace));
             traceFitness.add(sim);
         }
-        Collections.sort(traceFitness);
-        Iterator<TestSimilarity> itr = traceFitness.iterator();
+        Collections.sort(traceFitness);*/
+        List<String> order = new LinkedList<>();
+        List<String> candidates = getTestsOrderedByClosenessToTest(currentTest);
+        candidates.removeAll(excludeTests);
+        Iterator<String> itr = candidates.iterator();
         boolean pathStillFit = true;
         while (pathStillFit && itr.hasNext()) {
-            String nextTest = itr.next().test;
+            String nextTest = itr.next();
             order.add(nextTest);
             if (change.getChangeByTest(nextTest) <= threshold) {
                 pathStillFit = false;

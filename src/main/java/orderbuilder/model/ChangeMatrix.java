@@ -32,6 +32,7 @@ public class ChangeMatrix<T> extends TestChangeMatrix {
             }
             matrix[0][j] = (T) val;
         }
+        setMatrix();
     }
 
     public T getChangeByTest(String test) {

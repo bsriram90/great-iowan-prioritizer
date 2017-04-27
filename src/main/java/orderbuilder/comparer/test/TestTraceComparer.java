@@ -3,7 +3,6 @@ package orderbuilder.comparer.test;
 import orderbuilder.model.ChangeMatrix;
 import orderbuilder.model.differenceMatrix.DifferenceMatrix;
 import orderbuilder.model.differenceMatrix.TestTraceDifferenceMatrix;
-import orderbuilder.util.Util;
 import orderbuilder.util.Variables;
 
 import java.util.*;
@@ -15,11 +14,12 @@ import java.util.logging.Logger;
 public class TestTraceComparer extends TestComparer {
 
     Logger logger = Logger.getLogger(TestTraceComparer.class.toString());
+    // HashMap<String, List<String>> differingTraces = new HashMap<>();
 
     @Override
     public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff, HashMap<String, Object> criteria) throws Exception {
         TestTraceDifferenceMatrix<Long> prev = (TestTraceDifferenceMatrix) diff.get(0);
-        TestTraceDifferenceMatrix<Long> current = (TestTraceDifferenceMatrix) diff.get(1);
+        // TestTraceDifferenceMatrix<Long> current = (TestTraceDifferenceMatrix) diff.get(1);
         boolean debug = (boolean) criteria.get(Variables.DEBUG);
         Long differenceThreshold = (Long) criteria.get(Variables.THRESHOLD_1);
         Long backTrackThreshold = (Long) criteria.get(Variables.THRESHOLD_2);
@@ -37,6 +37,7 @@ public class TestTraceComparer extends TestComparer {
         List<String> testCasesCovered = new ArrayList<>();
         List<String> coreTests = new ArrayList<>();
         coreTests.add(differingTest);
+        // differingTraces.put(differingTest, getTraceDifference(prev.getTraceForTest(differingTest), current.getTraceForTest(differingTest)));
         String currentTest = differingTest;
         String currentTestCase = prev.getTestCaseByTest(differingTest);
         testCasesCovered.add(currentTestCase);
@@ -46,6 +47,7 @@ public class TestTraceComparer extends TestComparer {
                 List<String> insideTestCaseOrder = prev.getOrderedClosestTestsInTestCase(currentTest, pathFitness, currentTestCase, newOrder, change);
                 if (insideTestCaseOrder != null && insideTestCaseOrder.size() >= 1) {
                     coreTests.add(currentTest);
+                    //differingTraces.put(currentTest, getTraceDifference(prev.getTraceForTest(currentTest), current.getTraceForTest(currentTest)));
                     newOrder.addAll(insideTestCaseOrder);
                 }
             }
@@ -55,6 +57,11 @@ public class TestTraceComparer extends TestComparer {
                 results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
                 newOrder.addAll((LinkedList<String>) results[1]);
                 currentTest = (String) results[0];
+                if (currentTest != null) {
+                    coreTests.add(currentTest);
+                    //differingTraces.put(currentTest, getTraceDifference(prev.getTraceForTest(currentTest), current.getTraceForTest(currentTest)));
+                }
+
             } else {
                 currentTest = getNextTest(prev, testCasesCovered, coreTests, newOrder);
                 if (currentTest == null) {
@@ -63,12 +70,36 @@ public class TestTraceComparer extends TestComparer {
                     results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
                     newOrder.addAll((LinkedList<String>) results[1]);
                     currentTest = (String) results[0];
+                    if (currentTest != null) {
+                        coreTests.add(currentTest);
+                        //differingTraces.put(currentTest, getTraceDifference(prev.getTraceForTest(currentTest), current.getTraceForTest(currentTest)));
+                    }
                 }
             }
             currentTestCase = prev.getTestCaseByTest(currentTest);
             testCasesCovered.add(currentTestCase);
         }
         return newOrder;
+    }
+
+    private List<String> getTraceDifference(List<String> prevTrace, List<String> currTrace) {
+        /*int maxLength = (prevTrace.size() > currTrace.size()) ? prevTrace.size() : currTrace.size();
+        int differenceIndex = 0;
+        for(int i = 0; i < maxLength; i++) {
+            if(!currTrace.get(i).equals(prevTrace.get(i))) {
+                differenceIndex = i;
+                break;
+            }
+        }
+        List<String> difference = new ArrayList<>();
+        difference.addAll(currTrace.subList(differenceIndex, currTrace.size()));*/
+
+        List<String> temp1 = new ArrayList<>(prevTrace);
+        temp1.removeAll(currTrace);
+        List<String> temp2 = new ArrayList<>(currTrace);
+        temp2.removeAll(prevTrace);
+        temp1.addAll(temp2);
+        return temp1;
     }
 
     private String getNextTest(TestTraceDifferenceMatrix<Long> prev, List<String> excludeTestCase, List<String> coreTests, List<String> excludeTests) {
@@ -82,19 +113,18 @@ public class TestTraceComparer extends TestComparer {
         }
         String closest = null;
         Float dist = 0.0f;
+        // Float dist = 0l;
         for (String candidate : candidates) {
             Float testFitness = 0.0f;
             for (String coreTest : coreTests) {
-                testFitness += Util.jaccardSimilarity(prev.getTraceForTest(candidate), prev.getTraceForTest(coreTest));
+                // testFitness += Util.jaccardSimilarity(prev.getTraceForTest(candidate), differingTraces.get(coreTest));
+                testFitness += (Long) prev.getDifferenceBetweenTests(candidate, coreTest);
             }
             testFitness = testFitness / coreTests.size();
             if (testFitness >= dist) {
                 closest = candidate;
                 dist = testFitness;
             }
-        }
-        if (closest == null) {
-            System.out.println("null");
         }
         return closest;
     }

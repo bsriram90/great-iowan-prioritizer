@@ -12,6 +12,7 @@ public abstract class TestChangeMatrix<T> {
     protected Map<Integer, String> indexTest = new HashMap<>();
     protected Class<T> typeOfT;
     protected String version;
+    protected Long[][] longMatrix;
 
     public TestChangeMatrix(String fileName, Class<T> type) throws Exception {
         this(fileName, type, null);
@@ -34,9 +35,13 @@ public abstract class TestChangeMatrix<T> {
     }
 
     public Long[][] getLongMatrix() {
+        return longMatrix;
+    }
+
+    protected void setMatrix() {
         int r = matrix.length;
         int c = matrix[0].length;
-        Long[][] longMatrix = new Long[r][c];
+        longMatrix = new Long[r][c];
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 if (matrix[i][j] != null) {
@@ -46,7 +51,6 @@ public abstract class TestChangeMatrix<T> {
                 }
             }
         }
-        return longMatrix;
     }
 
     public Set<String> excludeTests(Collection<String> excludeList) {

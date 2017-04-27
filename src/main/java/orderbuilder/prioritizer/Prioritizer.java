@@ -43,17 +43,23 @@ public class Prioritizer {
     public static void main(String[] args) throws Exception {
         List<DifferenceMatrix> diffList = new ArrayList<>();
         // DifferenceMatrix<Long> diffMatrix = new DifferenceMatrix<>("./res/v2/differenceMatrix-v2.csv", Long.class);
+        Long start = System.currentTimeMillis();
         TestTraceDifferenceMatrix<Long> extDiff1 = new TestTraceDifferenceMatrix<>("./res/test-trace/xml-security/v2/differenceMatrix-v2.csv", Long.class, "v2", "./res/test-trace/xml-security/");
-        TestTraceDifferenceMatrix<Long> extDiff2 = new TestTraceDifferenceMatrix<>("./res/test-trace/xml-security/v3/differenceMatrix-v3.csv", Long.class, "v3", "./res/test-trace/xml-security/");
+        // TestTraceDifferenceMatrix<Long> extDiff2 = new TestTraceDifferenceMatrix<>("./res/test-trace/xml-security/v3/differenceMatrix-v3.csv", Long.class, "v3", "./res/test-trace/xml-security/");
+        System.out.println("Time to build difference matrices - " + (System.currentTimeMillis() - start) + "ms");
         diffList.add(extDiff1);
-        diffList.add(extDiff2);
+        // diffList.add(extDiff2);
+        start = System.currentTimeMillis();
         ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/test-trace/xml-security/changeMatrix.csv", Long.class);
+        System.out.println("Time to build change matrices - " + (System.currentTimeMillis() - start) + "ms");
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
         ResultMatrix resultMatrix = new ResultMatrix();
         List<String> referenceResults = changeMatrix.getTestsByChangeDesc();
         resultMatrix.setReferenceResult(referenceResults);
         LinkedList<String> order = null;
+        start = System.currentTimeMillis();
         order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria);
+        System.out.println("Time to Complete ordering - " + (System.currentTimeMillis() - start) + "ms");
         String id = "TraceComparer";
         resultMatrix.addResult(id, order);
         /*for (long i = 0; i < changeMatrix.getSize(); i += 1) {

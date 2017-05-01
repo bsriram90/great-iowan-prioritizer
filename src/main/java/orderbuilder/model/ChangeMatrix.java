@@ -63,20 +63,42 @@ public class ChangeMatrix<T> extends TestChangeMatrix {
     public List<String> getTestsByChangeDesc() {
         List<String> order = new ArrayList<>();
         TreeMap<Long, String> sorter = new TreeMap<>();
-        for (Object test : testIndex.keySet()) {
-            String testName = (String) test;
-            Long change = (Long) getChangeByTest(testName);
-            while (sorter.containsKey(change)) {
-                change++;
-            }
-            sorter.put(change, testName);
+        List<TestComparer> test = new ArrayList<>(testIndex.size());
+        for (Object ind : testIndex.keySet()) {
+            TestComparer tc = new TestComparer((String) ind, (Long) getChangeByTest((String) ind));
+            test.add(tc);
+//            String testName = (String) test;
+//            Long change = (Long) getChangeByTest(testName);
+//            while (sorter.containsKey(change)) {
+//                change++;
+//            }
+//            sorter.put(change, testName);
         }
-        Set<Long> keys = sorter.keySet();
+        /*Set<Long> keys = sorter.keySet();
         for (Long key : keys) {
             order.add(sorter.get(key));
+        }*/
+        Collections.sort(test);
+        for (TestComparer tc : test) {
+            order.add(tc.name);
         }
-        Collections.reverse(order);
         return order;
+    }
+
+    class TestComparer implements Comparable {
+        String name;
+        Long difference;
+
+        public TestComparer(String name, Long diff) {
+            this.name = name;
+            this.difference = diff;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            TestComparer tc = (TestComparer) o;
+            return tc.difference.compareTo(this.difference);
+        }
     }
 
 }

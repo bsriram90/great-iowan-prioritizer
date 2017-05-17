@@ -1,6 +1,7 @@
 package orderbuilder.prioritizer;
 
 import orderbuilder.comparer.test.*;
+import orderbuilder.evaluator.CorrelationScore;
 import orderbuilder.evaluator.ResultMatrix;
 import orderbuilder.model.ChangeMatrix;
 import orderbuilder.model.differenceMatrix.DifferenceMatrix;
@@ -53,7 +54,7 @@ public class Prioritizer {
         ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/test-trace/xml-security/changeMatrix.csv", Long.class);
         System.out.println("Time to build change matrices - " + (System.currentTimeMillis() - start) + "ms");
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
-        ResultMatrix resultMatrix = new ResultMatrix();
+        ResultMatrix resultMatrix = new ResultMatrix(extDiff1);
         List<String> referenceResults = changeMatrix.getTestsByChangeDesc();
         resultMatrix.setReferenceResult(referenceResults);
         LinkedList<String> order = null;
@@ -69,7 +70,8 @@ public class Prioritizer {
 
             }
         }*/
-        resultMatrix.printOrderedResults();
+        //resultMatrix.printOrderedResults();
+        CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.20f);
     }
 
 

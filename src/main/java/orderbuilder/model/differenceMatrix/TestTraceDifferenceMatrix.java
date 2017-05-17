@@ -115,6 +115,8 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
         Collections.sort(traceFitness);*/
         List<String> order = new LinkedList<>();
         List<String> candidates = getTestsOrderedByClosenessToTest(currentTest);
+        Set<String> tests = getAllTestsForTestCase(currentTestCase);
+        candidates.retainAll(tests);
         candidates.removeAll(excludeTests);
         Iterator<String> itr = candidates.iterator();
         boolean pathStillFit = true;

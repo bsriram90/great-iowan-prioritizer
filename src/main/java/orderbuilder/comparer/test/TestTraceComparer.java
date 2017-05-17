@@ -35,7 +35,7 @@ public class TestTraceComparer extends TestComparer {
             return newOrder;
         }
         List<String> testCasesCovered = new ArrayList<>();
-        List<String> coreTests = new ArrayList<>();
+        HashSet<String> coreTests = new HashSet<>();
         coreTests.add(differingTest);
         // differingTraces.put(differingTest, getTraceDifference(prev.getTraceForTest(differingTest), current.getTraceForTest(differingTest)));
         String currentTest = differingTest;
@@ -53,7 +53,7 @@ public class TestTraceComparer extends TestComparer {
             }
             if (testCasesCovered.size() >= prev.getNumOfTestCases() && newOrder.size() < change.getSize()) {
                 testCasesCovered = new ArrayList<>();
-                coreTests = new ArrayList<>();
+                coreTests = new HashSet<>();
                 results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
                 newOrder.addAll((LinkedList<String>) results[1]);
                 currentTest = (String) results[0];
@@ -66,7 +66,7 @@ public class TestTraceComparer extends TestComparer {
                 currentTest = getNextTest(prev, testCasesCovered, coreTests, newOrder);
                 if (currentTest == null) {
                     testCasesCovered = new ArrayList<>();
-                    coreTests = new ArrayList<>();
+                    coreTests = new HashSet<>();
                     results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
                     newOrder.addAll((LinkedList<String>) results[1]);
                     currentTest = (String) results[0];
@@ -102,7 +102,7 @@ public class TestTraceComparer extends TestComparer {
         return temp1;
     }
 
-    private String getNextTest(TestTraceDifferenceMatrix<Long> prev, List<String> excludeTestCase, List<String> coreTests, List<String> excludeTests) {
+    private String getNextTest(TestTraceDifferenceMatrix<Long> prev, List<String> excludeTestCase, Collection<String> coreTests, List<String> excludeTests) {
         Set<String> candidates = prev.getAllTests();
         if (excludeTests != null && excludeTests.size() > 1) {
             candidates.removeAll(excludeTests);

@@ -1,5 +1,6 @@
 package orderbuilder.evaluator;
 
+import orderbuilder.model.differenceMatrix.TestTraceDifferenceMatrix;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import java.util.*;
@@ -8,12 +9,14 @@ import java.util.*;
  * Created by Sriram on 02-04-2017.
  */
 public class ResultMatrix {
+    private TestTraceDifferenceMatrix diff;
     private List<String> referenceResult;
     private List<Result> results;
     private HashMap<String, Integer> testAndIndex = new HashMap<>();
 
-    public ResultMatrix() {
+    public ResultMatrix(TestTraceDifferenceMatrix change) {
         results = new ArrayList<>();
+        this.diff = change;
     }
 
     public List<String> getReferenceResult() {
@@ -28,7 +31,7 @@ public class ResultMatrix {
     }
 
     public void addResult(String id, List<String> order) {
-        results.add(new Result(id, order));
+        results.add(new Result(id, order, referenceResult, diff));
     }
 
     public List<Result> getResults() {
@@ -52,12 +55,12 @@ public class ResultMatrix {
         for (String test : referenceResult) {
             System.out.print(test + "\t");
         }
-        Collections.sort(results, new LevenstienComparator());
+        Collections.sort(results);
         System.out.print(System.lineSeparator());
         for (Result res : results) {
-            System.out.print(res.getId() + ":\t" + getLevenstienDistance(res) + " -\t");
+            System.out.print(res.getId() + ":\t" + res.getScore() + " -\n");
             for (String test : res.getOrder()) {
-                System.out.print(testAndIndex.get(test) + 1 + "\t");
+                System.out.print(testAndIndex.get(test) + 1 + " - " + test + " - " + diff.getTestCaseByTest(test) + "\n");
             }
             System.out.print(System.lineSeparator());
         }
@@ -82,6 +85,14 @@ public class ResultMatrix {
             Integer distance2 = editDist.apply(referenceString, string2);
             int distDiff = distance1 - distance2;
             return distDiff;
+        }
+    }
+
+    class PositionalWeightedDistance implements Comparator<Result> {
+
+        @Override
+        public int compare(Result o1, Result o2) {
+            return 0;
         }
     }
 }

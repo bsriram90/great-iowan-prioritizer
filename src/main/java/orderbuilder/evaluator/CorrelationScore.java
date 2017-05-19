@@ -57,38 +57,55 @@ public class CorrelationScore {
         for (int i = 0; i < order.size(); i++) {
             reference.add(i + 1);
         }
-        for (String test : order) {
-            result.add(referenceResult.indexOf(test) + 1);
+        for (String test : referenceResult) {
+            result.add(order.indexOf(test) + 1);
         }
         return correlationScore(reference, result);
     }
 
     public static Float correlationScore(List<Integer> reference, List<Integer> result) {
-        Long numerator = 0l;
-        Long denominator = 0l;
+        Long aij = 0l;
         for (int i = 0; i < reference.size(); i++) {
             for (int j = 0; j < reference.size(); j++) {
                 if (i != j) {
                     int a = a_ij(reference.get(i), reference.get(j), result.get(i), result.get(j));
-                    numerator += a;
-                    denominator += a * a;
+                    a *= a;
+                    aij += a;
                 }
             }
         }
-        if (numerator == 0) return 0.0f;
-        return ((Double) (numerator / Math.sqrt(denominator))).floatValue();
+        if (aij == 0) return 0.0f;
+        return ((Double) (aij / Math.sqrt(2 * aij))).floatValue();
     }
 
-    private static int a_ij(int r_i, int r_j, int r_prime_i, int r_prime_j) {
-        if (r_i <= r_prime_i && r_j <= r_prime_j) {
-            return 0;
-        } else if (r_i <= r_prime_i) {
-            return (r_j - r_prime_j);
-        } else if (r_j <= r_prime_j) {
-            return (r_i - r_prime_i);
-        } else {
-            return ((r_j - r_prime_j) + (r_i - r_prime_i));
+    private static int a_ij(Integer r_i, Integer r_j, Integer r_prime_i, Integer r_prime_j) {
+        boolean swapped = false;
+        int a = 0;
+        if(r_i > r_j) {
+            swapped = true;
+
+            int temp = r_i;
+            r_i = r_j;
+            r_j = temp;
+
+            temp = r_prime_i;
+            r_prime_i = r_prime_j;
+            r_prime_j = temp;
         }
+
+        if (r_prime_i < r_prime_j
+                && r_prime_i <= r_i
+                && r_prime_j <= r_j) {
+            a = 0;
+        } else if (r_prime_i <= r_i) {
+            a = (r_prime_j - r_j);
+        } else if (r_prime_j <= r_j) {
+            a = (r_prime_i - r_i);
+        } else {
+            a = ((r_prime_j - r_j) + (r_prime_i - r_i));
+        }
+        if(swapped) { a = -a; }
+        return a;
     }
 
     public static void main(String[] args) {
@@ -98,11 +115,16 @@ public class CorrelationScore {
         String[] test3 = new String[]{"5", "1", "2", "3", "4"};
         String[] test4 = new String[]{"2", "1", "4", "5", "3"};
         String[] test5 = new String[]{"1", "2", "3", "5", "4"};
-        /*System.out.println(Arrays.asList(test1) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test1)));
+        String[] test6 = new String[]{"1", "2", "5", "4", "3"};
+        String[] test7 = new String[]{"1", "4", "3", "2", "5"};
+        System.out.println(Arrays.asList(test1) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test1)));
         System.out.println(Arrays.asList(test2) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test2)));
         System.out.println(Arrays.asList(test3) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test3)));
         System.out.println(Arrays.asList(test4) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test4)));
-        System.out.println(Arrays.asList(test5) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test5)));*/
-        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test2), 0.20f);
+        System.out.println(Arrays.asList(test5) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test5)));
+//        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test1), 0.20f);
+//        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test2), 0.20f);
+        System.out.println(Arrays.asList(test6) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test6)));
+        System.out.println(Arrays.asList(test7) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test7)));
     }
 }

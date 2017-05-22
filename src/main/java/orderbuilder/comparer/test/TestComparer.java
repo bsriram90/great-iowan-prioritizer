@@ -12,7 +12,7 @@ import java.util.List;
  */
 public abstract class TestComparer {
 
-    public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff, HashMap<String, Object> criteria) throws Exception {
+    public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff, HashMap<String, Object> criteria, String startTest) throws Exception {
         return null;
     }
 }

@@ -1,0 +1,23 @@
+### BTrace Log: 5/21/17 1:59 AM
+
+org.apache.tools.ant.util.DOMElementWriterTest.<init>
+org.apache.tools.ant.util.DOMElementWriter.<clinit>
+org.apache.tools.ant.util.DOMElementWriter.<init>
+org.apache.tools.ant.util.DOMElementWriterTest.<init>
+org.apache.tools.ant.util.DOMElementWriter.<init>
+org.apache.tools.ant.util.DOMElementWriterTest.<init>
+org.apache.tools.ant.util.DOMElementWriter.<init>
+org.apache.tools.ant.util.DOMElementWriterTest.<init>
+org.apache.tools.ant.util.DOMElementWriter.<init>
+org.apache.tools.ant.util.DOMElementWriterTest.testIsReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference
+org.apache.tools.ant.util.DOMElementWriter.isReference

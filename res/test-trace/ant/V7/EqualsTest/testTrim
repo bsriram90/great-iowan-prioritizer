@@ -1,0 +1,13 @@
+### BTrace Log: 5/21/17 2:09 AM
+
+org.apache.tools.ant.taskdefs.condition.EqualsTest.<init>
+org.apache.tools.ant.taskdefs.condition.EqualsTest.<init>
+org.apache.tools.ant.taskdefs.condition.EqualsTest.testTrim
+org.apache.tools.ant.taskdefs.condition.Equals.<init>
+org.apache.tools.ant.taskdefs.condition.Equals.setArg1
+org.apache.tools.ant.taskdefs.condition.Equals.setArg2
+org.apache.tools.ant.taskdefs.condition.Equals.eval
+org.apache.tools.ant.taskdefs.condition.Equals.setTrim
+org.apache.tools.ant.taskdefs.condition.Equals.eval
+org.apache.tools.ant.taskdefs.condition.Equals.setArg2
+org.apache.tools.ant.taskdefs.condition.Equals.eval

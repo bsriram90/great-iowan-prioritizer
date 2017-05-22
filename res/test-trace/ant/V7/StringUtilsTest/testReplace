@@ -1,0 +1,8 @@
+### BTrace Log: 5/21/17 2:24 AM
+
+org.apache.tools.ant.util.StringUtilsTest.<init>
+org.apache.tools.ant.util.StringUtilsTest.<init>
+org.apache.tools.ant.util.StringUtilsTest.<init>
+org.apache.tools.ant.util.StringUtilsTest.testReplace
+org.apache.tools.ant.util.StringUtils.<clinit>
+org.apache.tools.ant.util.StringUtils.replace

@@ -3,6 +3,7 @@ package orderbuilder.comparer.string;
 import orderbuilder.util.Util;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -41,6 +42,18 @@ public class StringDifference {
         return difference;
     }
 
+    public static long setDifference(List<String> text1, List<String> text2) {
+        long difference = 0;
+        HashSet<String> lines1 = new HashSet<>(text1);
+        HashSet<String> temp = new HashSet<>(text1);
+        HashSet<String> lines2 = new HashSet<>(text2);
+        // A - B
+        lines1.removeAll(lines2);
+        // B - A
+        lines2.removeAll(temp);
+        return lines1.size() + lines2.size();
+    }
+
     public static long positionalDissimilarityScore(List<String> text1, List<String> text2, boolean weighted) {
         Long score = 0l;
         List<String> longer = null;
@@ -75,7 +88,11 @@ public class StringDifference {
     }
 
 
-        public static long basicLineDifference(String file1, String file2) {
+    public static long basicLineDifference(String file1, String file2) {
         return basicLineDifference(Util.getLinesFromFile(file1), Util.getLinesFromFile(file2));
+    }
+
+    public static long setDifference(String file1, String file2) {
+        return setDifference(Util.getLinesFromFile(file1), Util.getLinesFromFile(file2));
     }
 }

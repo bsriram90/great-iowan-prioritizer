@@ -17,16 +17,17 @@ public class TestTraceComparer extends TestComparer {
     // HashMap<String, List<String>> differingTraces = new HashMap<>();
 
     @Override
-    public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff, HashMap<String, Object> criteria) throws Exception {
+    public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff, HashMap<String, Object> criteria, String startTest) throws Exception {
         TestTraceDifferenceMatrix<Long> prev = (TestTraceDifferenceMatrix) diff.get(0);
         // TestTraceDifferenceMatrix<Long> current = (TestTraceDifferenceMatrix) diff.get(1);
         boolean debug = (boolean) criteria.get(Variables.DEBUG);
         Long differenceThreshold = (Long) criteria.get(Variables.THRESHOLD_1);
         Long backTrackThreshold = (Long) criteria.get(Variables.THRESHOLD_2);
         Long pathFitness = (Long) criteria.get(Variables.THRESHOLD_3);
-        Object[] results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, null);
-        String differingTest = (String) results[0];
-        LinkedList<String> newOrder = (LinkedList<String>) results[1];
+        Object[] results = null;
+        //TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, null);
+        String differingTest = startTest;
+        LinkedList<String> newOrder = new LinkedList<>();
         // if nothing changed enough, return here
         if (differingTest == null) {
             if (debug) {

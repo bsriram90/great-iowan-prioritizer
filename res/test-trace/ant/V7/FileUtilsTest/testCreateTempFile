@@ -1,0 +1,18 @@
+### BTrace Log: 5/21/17 2:08 AM
+
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.<init>
+org.apache.tools.ant.util.FileUtilsTest.setUp
+org.apache.tools.ant.taskdefs.condition.Os.<clinit>
+org.apache.tools.ant.taskdefs.condition.Os.isFamily
+org.apache.tools.ant.taskdefs.condition.Os.isOs
+org.apache.tools.ant.util.FileUtilsTest.testCreateTempFile
+org.apache.tools.ant.util.FileUtilsTest.tearDown

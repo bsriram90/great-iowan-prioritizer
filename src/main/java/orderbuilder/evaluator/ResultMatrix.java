@@ -60,7 +60,8 @@ public class ResultMatrix {
         for (Result res : results) {
             System.out.print(res.getId() + ":\t" + res.getScore() + " -\n");
             for (String test : res.getOrder()) {
-                System.out.print(testAndIndex.get(test) + 1 + " - " + test + " - " + diff.getTestCaseByTest(test) + "\n");
+                // System.out.print(testAndIndex.get(test) + 1 + " - " + test + " - " + diff.getTestCaseByTest(test) + "\n");
+                System.out.print(testAndIndex.get(test) + 1 + "\t");
             }
             System.out.print(System.lineSeparator());
         }

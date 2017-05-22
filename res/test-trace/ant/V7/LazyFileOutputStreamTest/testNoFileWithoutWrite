@@ -1,0 +1,6 @@
+### BTrace Log: 5/21/17 2:34 AM
+
+org.apache.tools.ant.util.LazyFileOutputStream.<init>
+org.apache.tools.ant.util.LazyFileOutputStream.<init>
+org.apache.tools.ant.util.LazyFileOutputStream.close
+org.apache.tools.ant.util.LazyFileOutputStream.close

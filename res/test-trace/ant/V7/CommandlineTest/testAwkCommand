@@ -1,0 +1,18 @@
+### BTrace Log: 5/21/17 1:56 AM
+
+org.apache.tools.ant.types.CommandlineTest.<init>
+org.apache.tools.ant.types.CommandlineTest.<init>
+org.apache.tools.ant.types.CommandlineTest.<init>
+org.apache.tools.ant.types.CommandlineTest.testAwkCommand
+org.apache.tools.ant.types.Commandline.<clinit>
+org.apache.tools.ant.util.StringUtils.<clinit>
+org.apache.tools.ant.types.Commandline.<init>
+org.apache.tools.ant.types.Commandline.setExecutable
+org.apache.tools.ant.types.Commandline.createArgument
+org.apache.tools.ant.types.Commandline.createArgument
+org.apache.tools.ant.ProjectComponent.<init>
+org.apache.tools.ant.types.Commandline$Argument.<init>
+org.apache.tools.ant.types.Commandline$Argument.setValue
+org.apache.tools.ant.types.Commandline.getCommandline
+org.apache.tools.ant.types.Commandline.addCommandToList
+org.apache.tools.ant.types.Commandline.addArgumentsToList

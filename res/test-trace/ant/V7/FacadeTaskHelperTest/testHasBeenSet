@@ -1,0 +1,16 @@
+### BTrace Log: 5/21/17 2:24 AM
+
+org.apache.tools.ant.util.facade.FacadeTaskHelperTest.<init>
+org.apache.tools.ant.util.facade.FacadeTaskHelperTest.<init>
+org.apache.tools.ant.util.facade.FacadeTaskHelperTest.testHasBeenSet
+org.apache.tools.ant.util.facade.FacadeTaskHelper.<init>
+org.apache.tools.ant.util.facade.FacadeTaskHelper.<init>
+org.apache.tools.ant.util.facade.FacadeTaskHelper.hasBeenSet
+org.apache.tools.ant.util.facade.FacadeTaskHelper.setMagicValue
+org.apache.tools.ant.util.facade.FacadeTaskHelper.hasBeenSet
+org.apache.tools.ant.util.facade.FacadeTaskHelper.setMagicValue
+org.apache.tools.ant.util.facade.FacadeTaskHelper.hasBeenSet
+org.apache.tools.ant.util.facade.FacadeTaskHelper.setMagicValue
+org.apache.tools.ant.util.facade.FacadeTaskHelper.hasBeenSet
+org.apache.tools.ant.util.facade.FacadeTaskHelper.setImplementation
+org.apache.tools.ant.util.facade.FacadeTaskHelper.hasBeenSet

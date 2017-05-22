@@ -1,0 +1,23 @@
+### BTrace Log: 5/21/17 1:56 AM
+
+org.apache.tools.ant.types.CommandlineTest.<init>
+org.apache.tools.ant.types.CommandlineTest.<init>
+org.apache.tools.ant.types.CommandlineTest.<init>
+org.apache.tools.ant.types.CommandlineTest.testToString
+org.apache.tools.ant.types.Commandline.<clinit>
+org.apache.tools.ant.util.StringUtils.<clinit>
+org.apache.tools.ant.types.Commandline.toString
+org.apache.tools.ant.types.Commandline.toString
+org.apache.tools.ant.types.Commandline.toString
+org.apache.tools.ant.types.Commandline.quoteArgument
+org.apache.tools.ant.types.Commandline.quoteArgument
+org.apache.tools.ant.types.Commandline.quoteArgument
+org.apache.tools.ant.types.Commandline.toString
+org.apache.tools.ant.types.Commandline.quoteArgument
+org.apache.tools.ant.types.Commandline.quoteArgument
+org.apache.tools.ant.types.Commandline.toString
+org.apache.tools.ant.types.Commandline.quoteArgument
+org.apache.tools.ant.types.Commandline.quoteArgument
+org.apache.tools.ant.types.Commandline.toString
+org.apache.tools.ant.types.Commandline.quoteArgument
+org.apache.tools.ant.types.Commandline.quoteArgument

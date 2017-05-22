@@ -1,0 +1,23 @@
+### BTrace Log: 5/21/17 2:29 AM
+
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.setUp
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.test6
+org.apache.tools.ant.taskdefs.email.EmailAddress.<init>
+org.apache.tools.ant.taskdefs.email.EmailAddress.trim
+org.apache.tools.ant.taskdefs.email.EmailAddress.trim
+org.apache.tools.ant.taskdefs.email.EmailAddressTest.expectNameAddress
+org.apache.tools.ant.taskdefs.email.EmailAddress.getName
+org.apache.tools.ant.taskdefs.email.EmailAddress.getAddress

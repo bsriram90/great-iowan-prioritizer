@@ -1,0 +1,9 @@
+### BTrace Log: 5/21/17 3:27 AM
+
+org.apache.tools.ant.util.JAXPUtilsTest.<init>
+org.apache.tools.ant.util.JAXPUtilsTest.testGetSystemId
+org.apache.tools.ant.util.JAXPUtils.<clinit>
+org.apache.tools.ant.taskdefs.condition.Os.<clinit>
+org.apache.tools.ant.taskdefs.condition.Os.isFamily
+org.apache.tools.ant.taskdefs.condition.Os.isOs
+org.apache.tools.ant.util.JAXPUtils.getSystemId

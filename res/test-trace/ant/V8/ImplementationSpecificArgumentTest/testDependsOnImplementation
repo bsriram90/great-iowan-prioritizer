@@ -1,0 +1,18 @@
+### BTrace Log: 5/21/17 3:26 AM
+
+org.apache.tools.ant.util.facade.ImplementationSpecificArgumentTest.<init>
+org.apache.tools.ant.util.facade.ImplementationSpecificArgumentTest.testDependsOnImplementation
+org.apache.tools.ant.ProjectComponent.<init>
+org.apache.tools.ant.types.Commandline$Argument.<init>
+org.apache.tools.ant.util.facade.ImplementationSpecificArgument.<init>
+org.apache.tools.ant.types.Commandline$Argument.setLine
+org.apache.tools.ant.types.Commandline.<clinit>
+org.apache.tools.ant.util.StringUtils.<clinit>
+org.apache.tools.ant.types.Commandline.translateCommandline
+org.apache.tools.ant.types.Commandline$Argument.getParts
+org.apache.tools.ant.util.facade.ImplementationSpecificArgument.getParts
+org.apache.tools.ant.types.Commandline$Argument.getParts
+org.apache.tools.ant.util.facade.ImplementationSpecificArgument.setImplementation
+org.apache.tools.ant.util.facade.ImplementationSpecificArgument.getParts
+org.apache.tools.ant.util.facade.ImplementationSpecificArgument.getParts
+org.apache.tools.ant.types.Commandline$Argument.getParts

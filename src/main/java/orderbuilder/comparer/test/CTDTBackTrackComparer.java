@@ -21,7 +21,7 @@ public class CTDTBackTrackComparer extends CTDTComparer {
     Logger logger = Logger.getLogger(TestComparer.class.getName());
 
     @Override
-    public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff1, HashMap<String, Object> criteria) throws Exception {
+    public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff1, HashMap<String, Object> criteria, String startTest) throws Exception {
         DifferenceMatrix diff = diff1.get(0);
         boolean debug = (boolean) criteria.get(Variables.DEBUG);
         Long differenceThreshold = (Long) criteria.get(Variables.THRESHOLD_1);

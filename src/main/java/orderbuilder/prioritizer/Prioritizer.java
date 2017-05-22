@@ -19,10 +19,10 @@ import java.util.List;
  */
 public class Prioritizer {
 
-    public static LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff, HashMap<String, Object> criteria) throws Exception {
+    public static LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff, HashMap<String, Object> criteria, String startTest) throws Exception {
         // get the right orderbuilder.comparer
         TestComparer comparer = getComparer(criteria);
-        return comparer.getExecutionOrder(change, diff, criteria);
+        return comparer.getExecutionOrder(change, diff, criteria, startTest);
     }
 
     private static TestComparer getComparer(HashMap<String, Object> criteria) {
@@ -45,13 +45,13 @@ public class Prioritizer {
         List<DifferenceMatrix> diffList = new ArrayList<>();
         // DifferenceMatrix<Long> diffMatrix = new DifferenceMatrix<>("./res/v2/differenceMatrix-v2.csv", Long.class);
         Long start = System.currentTimeMillis();
-        TestTraceDifferenceMatrix<Long> extDiff1 = new TestTraceDifferenceMatrix<>("./res/test-trace/xml-security/v2/differenceMatrix-v2.csv", Long.class, "v2", "./res/test-trace/xml-security/");
+        TestTraceDifferenceMatrix<Long> extDiff1 = new TestTraceDifferenceMatrix<>("./res/test-trace/ant/V7/differenceMatrix-pos-w.csv", Long.class, "V7", "./res/test-trace/ant/");
         // TestTraceDifferenceMatrix<Long> extDiff2 = new TestTraceDifferenceMatrix<>("./res/test-trace/xml-security/v3/differenceMatrix-v3.csv", Long.class, "v3", "./res/test-trace/xml-security/");
         System.out.println("Time to build difference matrices - " + (System.currentTimeMillis() - start) + "ms");
         diffList.add(extDiff1);
         // diffList.add(extDiff2);
         start = System.currentTimeMillis();
-        ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/test-trace/xml-security/changeMatrix.csv", Long.class);
+        ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/test-trace/ant/changeMatrix-pos-w.csv", Long.class);
         System.out.println("Time to build change matrices - " + (System.currentTimeMillis() - start) + "ms");
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
         ResultMatrix resultMatrix = new ResultMatrix(extDiff1);
@@ -59,7 +59,8 @@ public class Prioritizer {
         resultMatrix.setReferenceResult(referenceResults);
         LinkedList<String> order = null;
         start = System.currentTimeMillis();
-        order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria);
+        order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(0
+        ));
         System.out.println("Time to Complete ordering - " + (System.currentTimeMillis() - start) + "ms");
         String id = "TraceComparer";
         resultMatrix.addResult(id, order);
@@ -70,8 +71,8 @@ public class Prioritizer {
 
             }
         }*/
-        //resultMatrix.printOrderedResults();
-        CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.20f);
+        resultMatrix.printOrderedResults();
+        CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.05f);
     }
 
 

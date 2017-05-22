@@ -1,0 +1,22 @@
+### BTrace Log: 5/21/17 2:34 AM
+
+org.apache.tools.ant.util.ReferencesTest.<init>
+org.apache.tools.ant.util.ReferencesTest.testReferencesAreSoft
+org.apache.tools.ant.util.JavaEnvUtils.<clinit>
+org.apache.tools.ant.taskdefs.condition.Os.<clinit>
+org.apache.tools.ant.taskdefs.condition.Os.isFamily
+org.apache.tools.ant.taskdefs.condition.Os.isOs
+org.apache.tools.ant.taskdefs.condition.Os.isName
+org.apache.tools.ant.taskdefs.condition.Os.isOs
+org.apache.tools.ant.taskdefs.condition.Os.isName
+org.apache.tools.ant.taskdefs.condition.Os.isOs
+org.apache.tools.ant.taskdefs.condition.Os.isFamily
+org.apache.tools.ant.taskdefs.condition.Os.isOs
+org.apache.tools.ant.util.JavaEnvUtils.isJavaVersion
+org.apache.tools.ant.util.WeakishReference.createReference
+org.apache.tools.ant.util.WeakishReference.createReferenceConstructor
+org.apache.tools.ant.util.WeakishReference.class$
+org.apache.tools.ant.util.WeakishReference.class$
+org.apache.tools.ant.util.JavaEnvUtils.isJavaVersion
+org.apache.tools.ant.util.WeakishReference.<init>
+org.apache.tools.ant.util.optional.WeakishReference12.<init>

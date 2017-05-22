@@ -63,7 +63,7 @@ public class Util {
         return dir.list(new FilenameFilter() {
             @Override
             public boolean accept(File current, String name) {
-                return new File(current, name).isFile() && name.contains(".txt");
+                return new File(current, name).isFile();
             }
         });
     }

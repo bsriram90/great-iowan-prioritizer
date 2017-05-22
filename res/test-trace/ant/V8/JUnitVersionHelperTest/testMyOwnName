@@ -1,0 +1,12 @@
+### BTrace Log: 5/21/17 3:27 AM
+
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelperTest.<init>
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelperTest.<init>
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelperTest.<init>
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelperTest.<init>
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelperTest.<init>
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelperTest.<init>
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelperTest.testMyOwnName
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelper.<clinit>
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelper.class$
+org.apache.tools.ant.taskdefs.optional.junit.JUnitVersionHelper.getTestCaseName

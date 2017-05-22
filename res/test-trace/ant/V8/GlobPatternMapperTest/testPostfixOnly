@@ -1,0 +1,16 @@
+### BTrace Log: 5/21/17 3:01 AM
+
+org.apache.tools.ant.util.GlobPatternMapperTest.<init>
+org.apache.tools.ant.util.GlobPatternMapperTest.<init>
+org.apache.tools.ant.util.GlobPatternMapperTest.<init>
+org.apache.tools.ant.util.GlobPatternMapperTest.<init>
+org.apache.tools.ant.util.GlobPatternMapperTest.testPostfixOnly
+org.apache.tools.ant.util.GlobPatternMapper.<init>
+org.apache.tools.ant.util.GlobPatternMapper.setFrom
+org.apache.tools.ant.util.GlobPatternMapper.setTo
+org.apache.tools.ant.util.GlobPatternMapper.mapFileName
+org.apache.tools.ant.util.GlobPatternMapper.mapFileName
+org.apache.tools.ant.util.GlobPatternMapper.extractVariablePart
+org.apache.tools.ant.util.GlobPatternMapper.setTo
+org.apache.tools.ant.util.GlobPatternMapper.mapFileName
+org.apache.tools.ant.util.GlobPatternMapper.extractVariablePart

@@ -42,37 +42,54 @@ public class Prioritizer {
     }
 
     public static void main(String[] args) throws Exception {
-        List<DifferenceMatrix> diffList = new ArrayList<>();
-        // DifferenceMatrix<Long> diffMatrix = new DifferenceMatrix<>("./res/v2/differenceMatrix-v2.csv", Long.class);
-        Long start = System.currentTimeMillis();
-        TestTraceDifferenceMatrix<Long> extDiff1 = new TestTraceDifferenceMatrix<>("./res/test-trace/ant/V7/differenceMatrix-pos-w.csv", Long.class, "V7", "./res/test-trace/ant/");
-        // TestTraceDifferenceMatrix<Long> extDiff2 = new TestTraceDifferenceMatrix<>("./res/test-trace/xml-security/v3/differenceMatrix-v3.csv", Long.class, "v3", "./res/test-trace/xml-security/");
-        System.out.println("Time to build difference matrices - " + (System.currentTimeMillis() - start) + "ms");
-        diffList.add(extDiff1);
-        // diffList.add(extDiff2);
-        start = System.currentTimeMillis();
-        ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>("./res/test-trace/ant/changeMatrix-pos-w.csv", Long.class);
-        System.out.println("Time to build change matrices - " + (System.currentTimeMillis() - start) + "ms");
-        HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
-        ResultMatrix resultMatrix = new ResultMatrix(extDiff1);
-        List<String> referenceResults = changeMatrix.getTestsByChangeDesc();
-        resultMatrix.setReferenceResult(referenceResults);
-        LinkedList<String> order = null;
-        start = System.currentTimeMillis();
-        order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(0
-        ));
-        System.out.println("Time to Complete ordering - " + (System.currentTimeMillis() - start) + "ms");
-        String id = "TraceComparer";
-        resultMatrix.addResult(id, order);
-        /*for (long i = 0; i < changeMatrix.getSize(); i += 1) {
-            criteria.put(Variables.THRESHOLD_2, i);
-            for (long j = 0; j < 1000; j += 100) {
-                criteria.put(Variables.THRESHOLD_3, j);
 
-            }
-        }*/
-        resultMatrix.printOrderedResults();
-        CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.05f);
+        HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
+        String path = "./res/test-trace/xml-security/";
+        String type = "spearman";
+
+        getCorrelationScoreForMatrices(criteria,
+                path + "v2/pos-w-differenceMatrix.csv",
+                "v2",
+                path,
+                path + "pos-w-changeMatrix.csv",
+                "Positional Weighted",
+                type);
+
+        getCorrelationScoreForMatrices(criteria,
+                path + "v2/pos-uw-differenceMatrix.csv",
+                "v2",
+                path,
+                path + "pos-uw-changeMatrix.csv",
+                "Positional Unweighted",
+                type);
+
+        getCorrelationScoreForMatrices(criteria,
+                path + "v2/differenceMatrix-v2.csv",
+                "v2",
+                path,
+                path + "changeMatrix.csv",
+                "Multiset",
+                type);
+
+        getCorrelationScoreForMatrices(criteria,
+                path + "v2/differenceMatrix-1.csv",
+                "v2",
+                path,
+                path + "changeMatrix-1.csv",
+                "Set",
+                type);
+    }
+
+    private static void getCorrelationScoreForMatrices(HashMap<String, Object> criteria, String diffFileName, String version, String path, String changeFileName, String name, String type) throws Exception {
+        TestTraceDifferenceMatrix<Long> diffMatrix = new TestTraceDifferenceMatrix<>(diffFileName, Long.class, version, path);
+        ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>(changeFileName, Long.class);
+        List<String> referenceResults = changeMatrix.getTestsByChangeDesc();
+        List<DifferenceMatrix> diffList = new ArrayList<>();
+        diffList.add(diffMatrix);
+        LinkedList<String> order = null;
+        order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(0));
+        System.out.println(name + " - " + order);
+        CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.05f, type);
     }
 
 

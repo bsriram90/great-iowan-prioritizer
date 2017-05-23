@@ -27,7 +27,7 @@ public class CorrelationScore {
         return score;
     }
 
-    public static void printCorrelationScoreByBands(List<String> referenceResult, List<String> order, Float band) {
+    public static void printCorrelationScoreByBands(List<String> referenceResult, List<String> order, Float band, String type) {
         ArrayList<String> orderArrayList = new ArrayList<>(order);
         ArrayList<Integer> reference = new ArrayList<>(order.size());
         int bandSize = Math.round(referenceResult.size() * band);
@@ -37,6 +37,7 @@ public class CorrelationScore {
         StringBuilder header = new StringBuilder("");
         StringBuilder body = new StringBuilder("");
         int n = (int) Math.ceil((float) referenceResult.size() / bandSize);
+        Float spearman_n = Float.valueOf((referenceResult.size() * ( referenceResult.size() * referenceResult.size() - 1)));
         for (int i = 0; i < n; i++) {
             ArrayList<Integer> result = new ArrayList<>(order.size());
             int limit = (i * bandSize + bandSize > referenceResult.size()) ? referenceResult.size() : i * bandSize + bandSize;
@@ -45,7 +46,13 @@ public class CorrelationScore {
                 result.add(orderArrayList.indexOf(test) + 1);
             }
             header.append("Band-" + i + "(Size=" + result.size() + "),");
-            body.append(CorrelationScore.correlationScore(reference.subList(0, limit), result) + ",");
+            Float score = null;
+            if(type.equals("custom")) {
+                score = CorrelationScore.correlationScore(reference.subList(0, limit),result);
+            } else {
+                score = CorrelationScore.spearmanCoefficient(reference.subList(0, limit),result, spearman_n);
+            }
+            body.append(score + ",");
         }
         System.out.println(header);
         System.out.println(body);
@@ -108,6 +115,24 @@ public class CorrelationScore {
         return a;
     }
 
+    public static Float spearmanCoefficient(List<Integer> referenceResult, List<Integer> order, Float spearman_n) {
+        Long d_i = 0l;
+        for(int i=0; i<referenceResult.size(); i++) {
+            int d = d_i(referenceResult.get(i), order.get(i));
+            d_i += d * d;
+        }
+        Float correlation = 1.0f - ((6 * d_i)/(spearman_n));
+        return correlation;
+    }
+
+    private static int d_i(Integer reference, Integer order) {
+        if(order > reference) {
+            return reference - order;
+        } else {
+            return 0;
+        }
+    }
+
     public static void main(String[] args) {
         String[] ref = new String[]{"1", "2", "3", "4", "5"};
         String[] test1 = new String[]{"1", "2", "3", "4", "5"};
@@ -117,14 +142,19 @@ public class CorrelationScore {
         String[] test5 = new String[]{"1", "2", "3", "5", "4"};
         String[] test6 = new String[]{"1", "2", "5", "4", "3"};
         String[] test7 = new String[]{"1", "4", "3", "2", "5"};
-        System.out.println(Arrays.asList(test1) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test1)));
-        System.out.println(Arrays.asList(test2) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test2)));
-        System.out.println(Arrays.asList(test3) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test3)));
-        System.out.println(Arrays.asList(test4) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test4)));
-        System.out.println(Arrays.asList(test5) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test5)));
-//        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test1), 0.20f);
-//        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test2), 0.20f);
-        System.out.println(Arrays.asList(test6) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test6)));
-        System.out.println(Arrays.asList(test7) + " - " + CorrelationScore.customCorrelationScore(Arrays.asList(ref), Arrays.asList(test7)));
+        System.out.println(Arrays.asList(test1));
+        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test1),1.0f,"spearman");
+        System.out.println(Arrays.asList(test2));
+        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test2),1.0f,"spearman");
+        System.out.println(Arrays.asList(test3));
+        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test3),1.0f,"spearman");
+        System.out.println(Arrays.asList(test4));
+        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test4),1.0f,"spearman");
+        System.out.println(Arrays.asList(test5));
+        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test5),1.0f,"spearman");
+        System.out.println(Arrays.asList(test6));
+        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test6),1.0f,"spearman");
+        System.out.println(Arrays.asList(test7));
+        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test7),1.0f,"spearman");
     }
 }

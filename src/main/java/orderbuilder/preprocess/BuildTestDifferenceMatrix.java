@@ -43,9 +43,9 @@ public class BuildTestDifferenceMatrix {
                 File filesDir = new File(filePath);
                 String[] fileNames = Util.getAllFiles(filesDir);
                 for (String file : fileNames) {
-                    testsInVersion.add(file);
-                    files.add(file);
-                    paths.put(file, filePath + "/" + file);
+                    testsInVersion.add(testDir + "-" + file);
+                    files.add(testDir + "-" + file);
+                    paths.put(testDir + "-" + file, filePath + "/" + file);
                 }
             }
 
@@ -59,12 +59,13 @@ public class BuildTestDifferenceMatrix {
                 for(int k=j+1; k<testsInVersion.size(); k++) {
                     if(j != k) {
                         //System.out.println("difference[" + j + "][" + k + "]");
-                        difference[j][k] = StringDifference.setDifference(paths.get(testsInVersion.get(j)), paths.get(testsInVersion.get(k)));
+                        difference[j][k] = StringDifference.positionalDissimilarityScore(paths.get(testsInVersion.get(j)), paths.get(testsInVersion.get(k)), false);
                     }
                 }
             }
             filePaths.add(paths);
             writeDifferenceMatrixToFile(versionPath, difference, testsInVersion);
+
         }
         StringBuilder header = new StringBuilder("");
         StringBuilder body = new StringBuilder("");
@@ -77,11 +78,11 @@ public class BuildTestDifferenceMatrix {
             if (path1 == null || path1.trim().equals("") || path2 == null || path2.trim().equals("")) {
                 body.append("NA,");
             } else {
-                body.append(StringDifference.setDifference(path1, path2) + ",");
+                body.append(StringDifference.positionalDissimilarityScore(path1, path2, false) + ",");
             }
         }
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + "/" + "changeMatrix-set.csv", false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + "changeMatrix-pos-uw-1.csv", false));
             writer.append(header.toString().substring(0, header.length() - 1));
             writer.newLine();
             writer.append(body.toString().substring(0, body.length() - 1));
@@ -94,7 +95,7 @@ public class BuildTestDifferenceMatrix {
 
     private void writeDifferenceMatrixToFile(String versionPath, Long[][] difference, List<String> testsInVersion) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(versionPath + "/" + "differenceMatrix-set.csv", false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(versionPath + "/" + "differenceMatrix-pos-uw-1.csv", false));
             StringBuilder row = new StringBuilder("Files");
             for (String file : testsInVersion) {
                 row.append("," + file);

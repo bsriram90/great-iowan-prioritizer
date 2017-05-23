@@ -1,7 +1,6 @@
 package orderbuilder.prioritizer;
 
 import orderbuilder.comparer.test.*;
-import orderbuilder.evaluator.CorrelationScore;
 import orderbuilder.evaluator.ResultMatrix;
 import orderbuilder.model.ChangeMatrix;
 import orderbuilder.model.differenceMatrix.DifferenceMatrix;
@@ -44,38 +43,39 @@ public class Prioritizer {
     public static void main(String[] args) throws Exception {
 
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
-        String path = "./res/test-trace/xml-security/";
+        String path = "./res/test-trace/ant/";
         String type = "spearman";
+        String version = "V7";
 
         getCorrelationScoreForMatrices(criteria,
-                path + "v2/pos-w-differenceMatrix.csv",
-                "v2",
+                path + "V7/differenceMatrix-pos-w-1.csv",
+                version,
                 path,
-                path + "pos-w-changeMatrix.csv",
+                path + "changeMatrix-pos-w-1.csv",
                 "Positional Weighted",
                 type);
 
         getCorrelationScoreForMatrices(criteria,
-                path + "v2/pos-uw-differenceMatrix.csv",
-                "v2",
+                path + "V7/differenceMatrix-pos-uw-1.csv",
+                version,
                 path,
-                path + "pos-uw-changeMatrix.csv",
+                path + "changeMatrix-pos-uw-1.csv",
                 "Positional Unweighted",
                 type);
 
         getCorrelationScoreForMatrices(criteria,
-                path + "v2/differenceMatrix-v2.csv",
-                "v2",
+                path + "V7/differenceMatrix-multiset-1.csv",
+                version,
                 path,
-                path + "changeMatrix.csv",
+                path + "changeMatrix-multiset-1.csv",
                 "Multiset",
                 type);
 
         getCorrelationScoreForMatrices(criteria,
-                path + "v2/differenceMatrix-1.csv",
-                "v2",
+                path + "V7/differenceMatrix-set-1.csv",
+                version,
                 path,
-                path + "changeMatrix-1.csv",
+                path + "changeMatrix-set-1.csv",
                 "Set",
                 type);
     }
@@ -86,10 +86,13 @@ public class Prioritizer {
         List<String> referenceResults = changeMatrix.getTestsByChangeDesc();
         List<DifferenceMatrix> diffList = new ArrayList<>();
         diffList.add(diffMatrix);
-        LinkedList<String> order = null;
-        order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(0));
-        System.out.println(name + " - " + order);
-        CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.05f, type);
+        LinkedList<String> order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(0));
+        ResultMatrix matrix = new ResultMatrix(diffMatrix);
+        matrix.setReferenceResult(referenceResults);
+        matrix.addResult(name, order);
+        matrix.printOrderedResults();
+        //System.out.println(name + " - " + order);
+        //CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.05f, type);
     }
 
 

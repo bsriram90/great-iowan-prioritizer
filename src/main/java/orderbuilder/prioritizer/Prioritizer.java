@@ -1,7 +1,7 @@
 package orderbuilder.prioritizer;
 
 import orderbuilder.comparer.test.*;
-import orderbuilder.evaluator.ResultMatrix;
+import orderbuilder.evaluator.Validator;
 import orderbuilder.model.ChangeMatrix;
 import orderbuilder.model.differenceMatrix.DifferenceMatrix;
 import orderbuilder.model.differenceMatrix.TestTraceDifferenceMatrix;
@@ -43,19 +43,19 @@ public class Prioritizer {
     public static void main(String[] args) throws Exception {
 
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
-        String path = "./res/test-trace/ant/";
+        String path = "./res/test-trace/xml-security/";
         String type = "spearman";
-        String version = "V7";
+        String version = "v2";
 
         getCorrelationScoreForMatrices(criteria,
-                path + "V7/differenceMatrix-pos-w-1.csv",
+                path + "v2/pos-w-differenceMatrix.csv",
                 version,
                 path,
-                path + "changeMatrix-pos-w-1.csv",
+                path + "pos-w-changeMatrix.csv",
                 "Positional Weighted",
                 type);
 
-        getCorrelationScoreForMatrices(criteria,
+        /*getCorrelationScoreForMatrices(criteria,
                 path + "V7/differenceMatrix-pos-uw-1.csv",
                 version,
                 path,
@@ -77,7 +77,7 @@ public class Prioritizer {
                 path,
                 path + "changeMatrix-set-1.csv",
                 "Set",
-                type);
+                type);*/
     }
 
     private static void getCorrelationScoreForMatrices(HashMap<String, Object> criteria, String diffFileName, String version, String path, String changeFileName, String name, String type) throws Exception {
@@ -87,10 +87,18 @@ public class Prioritizer {
         List<DifferenceMatrix> diffList = new ArrayList<>();
         diffList.add(diffMatrix);
         LinkedList<String> order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(0));
-        ResultMatrix matrix = new ResultMatrix(diffMatrix);
+
+        String change_file = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\change-status.txt";
+        String change_value = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\diff-changes.txt";
+
+        Validator validator = new Validator(change_file, change_value);
+
+
+        validator.printBandChangeSummary(order, diffMatrix, changeMatrix);
+        /*ResultMatrix matrix = new ResultMatrix(diffMatrix);
         matrix.setReferenceResult(referenceResults);
         matrix.addResult(name, order);
-        matrix.printOrderedResults();
+        matrix.printOrderedResults();*/
         //System.out.println(name + " - " + order);
         //CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.05f, type);
     }

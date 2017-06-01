@@ -83,9 +83,10 @@ public class TestTraceDifferenceMatrix<T> extends DifferenceMatrix {
                     }
                     previous = line;
                 }
-
-                testTraces.put(dir + "-" + test, trace);
-                testDirectory.put(dir + "-" + test, dir);
+                testTraces.put(test, trace);
+                testDirectory.put(test, dir);
+                /*testTraces.put(dir + "-" + test, trace);
+                testDirectory.put(dir + "-" + test, dir);*/
             }
             testcaseTraces.put(dir, testTraces);
         }

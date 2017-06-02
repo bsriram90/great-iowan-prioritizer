@@ -1,15 +1,15 @@
 package orderbuilder.evaluator;
 
 import orderbuilder.model.differenceMatrix.TestTraceDifferenceMatrix;
+import orderbuilder.util.Util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Sriram on 13-05-2017.
  */
-public class CorrelationScore {
+public class Score {
 
     public static Float lineDiffScore(List<String> order, List<String> referenceResult, TestTraceDifferenceMatrix diff) {
         Float score = 0.0f;
@@ -48,9 +48,9 @@ public class CorrelationScore {
             header.append("Band-" + i + "(Size=" + result.size() + "),");
             Float score = null;
             if(type.equals("custom")) {
-                score = CorrelationScore.correlationScore(reference.subList(0, limit),result);
+                score = Score.correlationScore(reference.subList(0, limit), result);
             } else {
-                score = CorrelationScore.spearmanCoefficient(reference.subList(0, limit),result, spearman_n);
+                score = Score.spearmanCoefficient(reference.subList(0, limit), result, spearman_n);
             }
             body.append(score + ",");
         }
@@ -133,9 +133,20 @@ public class CorrelationScore {
         }
     }
 
+    public static Double getAPFDScore(List<String> order, List<String> failedTests) {
+        int n = order.size();
+        int m = failedTests.size();
+        Integer summation = 0;
+        for (String test : failedTests) {
+            summation += (order.indexOf(test) + 1);
+        }
+        Double apfd = 1.0 - (summation.doubleValue() / (m * n)) + 1.0 / (2 * n);
+        return apfd;
+    }
+
     public static void main(String[] args) {
         String[] ref = new String[]{"1", "2", "3", "4", "5"};
-        String[] test1 = new String[]{"1", "2", "3", "4", "5"};
+        /*String[] test1 = new String[]{"1", "2", "3", "4", "5"};
         String[] test2 = new String[]{"5", "4", "3", "2", "1"};
         String[] test3 = new String[]{"5", "1", "2", "3", "4"};
         String[] test4 = new String[]{"2", "1", "4", "5", "3"};
@@ -143,18 +154,25 @@ public class CorrelationScore {
         String[] test6 = new String[]{"1", "2", "5", "4", "3"};
         String[] test7 = new String[]{"1", "4", "3", "2", "5"};
         System.out.println(Arrays.asList(test1));
-        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test1),1.0f,"spearman");
+        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test1),1.0f,"spearman");
         System.out.println(Arrays.asList(test2));
-        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test2),1.0f,"spearman");
+        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test2),1.0f,"spearman");
         System.out.println(Arrays.asList(test3));
-        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test3),1.0f,"spearman");
+        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test3),1.0f,"spearman");
         System.out.println(Arrays.asList(test4));
-        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test4),1.0f,"spearman");
+        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test4),1.0f,"spearman");
         System.out.println(Arrays.asList(test5));
-        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test5),1.0f,"spearman");
+        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test5),1.0f,"spearman");
         System.out.println(Arrays.asList(test6));
-        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test6),1.0f,"spearman");
+        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test6),1.0f,"spearman");
         System.out.println(Arrays.asList(test7));
-        CorrelationScore.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test7),1.0f,"spearman");
+        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test7),1.0f,"spearman");*/
+
+        String[] apfdTest = new String[]{"1"};
+
+        List<String> failiures = Util.getLinesFromFile("./res/test-trace/xml-security/V3-seeded/failed-tests.txt");
+        List<String> order = Util.getLinesFromFile("./res/test-trace/xml-security/V3-seeded/test-order.txt");
+
+        System.out.println(Score.getAPFDScore(order, failiures));
     }
 }

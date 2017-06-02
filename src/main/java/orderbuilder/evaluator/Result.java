@@ -24,7 +24,7 @@ public class Result implements Comparable {
     }
 
     private Float generateScore(List<String> referenceResult, TestTraceDifferenceMatrix diff) {
-        return CorrelationScore.customCorrelationScore(order, referenceResult);
+        return Score.customCorrelationScore(order, referenceResult);
     }
 
     public String getId() {

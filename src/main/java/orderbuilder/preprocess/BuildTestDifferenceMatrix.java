@@ -59,7 +59,7 @@ public class BuildTestDifferenceMatrix {
                 for(int k=j+1; k<testsInVersion.size(); k++) {
                     if(j != k) {
                         //System.out.println("difference[" + j + "][" + k + "]");
-                        difference[j][k] = StringDifference.positionalDissimilarityScore(paths.get(testsInVersion.get(j)), paths.get(testsInVersion.get(k)), false);
+                        difference[j][k] = StringDifference.positionalDissimilarityScore(paths.get(testsInVersion.get(j)), paths.get(testsInVersion.get(k)), true);
                     }
                 }
             }
@@ -78,11 +78,11 @@ public class BuildTestDifferenceMatrix {
             if (path1 == null || path1.trim().equals("") || path2 == null || path2.trim().equals("")) {
                 body.append("NA,");
             } else {
-                body.append(StringDifference.positionalDissimilarityScore(path1, path2, false) + ",");
+                body.append(StringDifference.positionalDissimilarityScore(path1, path2, true) + ",");
             }
         }
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + "changeMatrix-pos-uw-1.csv", false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(TRACE_FILES_DIRECTORY + "changeMatrix-pos-w.csv", false));
             writer.append(header.toString().substring(0, header.length() - 1));
             writer.newLine();
             writer.append(body.toString().substring(0, body.length() - 1));
@@ -95,7 +95,7 @@ public class BuildTestDifferenceMatrix {
 
     private void writeDifferenceMatrixToFile(String versionPath, Long[][] difference, List<String> testsInVersion) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(versionPath + "/" + "differenceMatrix-pos-uw-1.csv", false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(versionPath + "/" + "differenceMatrix-pos-w.csv", false));
             StringBuilder row = new StringBuilder("Files");
             for (String file : testsInVersion) {
                 row.append("," + file);
@@ -118,7 +118,7 @@ public class BuildTestDifferenceMatrix {
     }
 
     public static void main(String[] args) throws Exception {
-        BuildTestDifferenceMatrix matrixBuilder = new BuildTestDifferenceMatrix("res/test-trace/ant/");
+        BuildTestDifferenceMatrix matrixBuilder = new BuildTestDifferenceMatrix("res/test-trace/xml-security/");
         matrixBuilder.buildMatrix();
     }
 }

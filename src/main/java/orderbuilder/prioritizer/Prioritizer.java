@@ -1,7 +1,7 @@
 package orderbuilder.prioritizer;
 
 import orderbuilder.comparer.test.*;
-import orderbuilder.evaluator.Validator;
+import orderbuilder.evaluator.Score;
 import orderbuilder.model.ChangeMatrix;
 import orderbuilder.model.differenceMatrix.DifferenceMatrix;
 import orderbuilder.model.differenceMatrix.TestTraceDifferenceMatrix;
@@ -45,13 +45,13 @@ public class Prioritizer {
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
         String path = "./res/test-trace/xml-security/";
         String type = "spearman";
-        String version = "v2";
+        String version = "V2";
 
         getCorrelationScoreForMatrices(criteria,
-                path + "v2/pos-w-differenceMatrix.csv",
+                path + "V2/differenceMatrix-pos-w.csv",
                 version,
                 path,
-                path + "pos-w-changeMatrix.csv",
+                path + "changeMatrix-pos-w.csv",
                 "Positional Weighted",
                 type);
 
@@ -88,19 +88,21 @@ public class Prioritizer {
         diffList.add(diffMatrix);
         LinkedList<String> order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(0));
 
-        String change_file = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\change-status.txt";
-        String change_value = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\diff-changes.txt";
+        //String change_file = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\change-status.txt";
+        //String change_value = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\diff-changes.txt";
 
-        Validator validator = new Validator(change_file, change_value);
+        //Validator validator = new Validator(change_file, change_value);
 
 
-        validator.printBandChangeSummary(order, diffMatrix, changeMatrix);
+        //validator.printBandChangeSummary(order, diffMatrix, changeMatrix);
         /*ResultMatrix matrix = new ResultMatrix(diffMatrix);
         matrix.setReferenceResult(referenceResults);
         matrix.addResult(name, order);
         matrix.printOrderedResults();*/
-        //System.out.println(name + " - " + order);
-        //CorrelationScore.printCorrelationScoreByBands(referenceResults, order, 0.05f, type);
+        System.out.println(name + " - " + order);
+        //Score.printCorrelationScoreByBands(referenceResults, order, 0.05f, type);
+        List<String> failiures = Util.getLinesFromFile("./res/test-trace/xml-security/V3-seeded/failed-tests.txt");
+        System.out.println(Score.getAPFDScore(order, failiures));
     }
 
 

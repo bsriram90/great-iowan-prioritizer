@@ -42,12 +42,19 @@ public class TestTraceComparer extends TestComparer {
         String currentTest = differingTest;
         String currentTestCase = prev.getTestCaseByTest(differingTest);
         testCasesCovered.add(currentTestCase);
+        boolean testsDiffered = false;
         while (newOrder.size() < change.getSize()) {
             newOrder.add(currentTest);
             if ((Long) change.getChangeByTest(currentTest) >= pathFitness) {
+                coreTests.add(currentTest);
+                if (!testsDiffered) {
+                    testsDiffered = true;
+                    coreTests.clear();
+                    coreTests.add(currentTest);
+                }
                 List<String> insideTestCaseOrder = prev.getOrderedClosestTestsInTestCase(currentTest, pathFitness, currentTestCase, newOrder, change);
                 if (insideTestCaseOrder != null && insideTestCaseOrder.size() >= 1) {
-                    coreTests.add(currentTest);
+                    //coreTests.add(currentTest);
                     //differingTraces.put(currentTest, getTraceDifference(prev.getTraceForTest(currentTest), current.getTraceForTest(currentTest)));
                     newOrder.addAll(insideTestCaseOrder);
                 }
@@ -62,9 +69,8 @@ public class TestTraceComparer extends TestComparer {
                     coreTests.add(currentTest);
                     //differingTraces.put(currentTest, getTraceDifference(prev.getTraceForTest(currentTest), current.getTraceForTest(currentTest)));
                 }
-
             } else {
-                currentTest = getNextTest(prev, testCasesCovered, coreTests, newOrder);
+                currentTest = getNextTest(prev, testCasesCovered, coreTests, newOrder, testsDiffered);
                 if (currentTest == null) {
                     testCasesCovered = new ArrayList<>();
                     coreTests = new HashSet<>();
@@ -103,7 +109,7 @@ public class TestTraceComparer extends TestComparer {
         return temp1;
     }
 
-    private String getNextTest(TestTraceDifferenceMatrix<Long> prev, List<String> excludeTestCase, Collection<String> coreTests, List<String> excludeTests) {
+    private String getNextTest(TestTraceDifferenceMatrix<Long> prev, List<String> excludeTestCase, Collection<String> coreTests, List<String> excludeTests, boolean testsDiffered) {
         Set<String> candidates = prev.getAllTests();
         if (excludeTests != null && excludeTests.size() > 1) {
             candidates.removeAll(excludeTests);
@@ -114,6 +120,9 @@ public class TestTraceComparer extends TestComparer {
         }
         String closest = null;
         Float dist = 0.0f;
+        if (!testsDiffered) {
+            dist = Float.MAX_VALUE;
+        }
         // Float dist = 0l;
         for (String candidate : candidates) {
             Float testFitness = 0.0f;
@@ -122,9 +131,16 @@ public class TestTraceComparer extends TestComparer {
                 testFitness += (Long) prev.getDifferenceBetweenTests(candidate, coreTest);
             }
             testFitness = testFitness / coreTests.size();
-            if (testFitness >= dist) {
-                closest = candidate;
-                dist = testFitness;
+            if (testsDiffered) {
+                if (testFitness <= dist) {
+                    closest = candidate;
+                    dist = testFitness;
+                }
+            } else {
+                if (testFitness >= dist) {
+                    closest = candidate;
+                    dist = testFitness;
+                }
             }
         }
         return closest;

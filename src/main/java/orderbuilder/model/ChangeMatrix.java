@@ -12,6 +12,11 @@ public class ChangeMatrix<T> extends TestChangeMatrix {
 
     private static final Logger logger = Logger.getLogger(ChangeMatrix.class.getName());
 
+    public String getRandomTest() {
+        int index = (int)(Math.random() * size);
+        return getTestByIndex(index);
+    }
+
     public ChangeMatrix(String fileName, Class<T> type) throws Exception {
         super(fileName, type);
         List<String> lines = Util.getLinesFromFile(fileName);

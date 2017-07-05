@@ -53,8 +53,8 @@ public class Prioritizer {
 
         for (long index = 0; index < 100000; index += 1000) {
             System.out.print(index + ",");
-            //criteria.put(Variables.THRESHOLD_1, index);
-            criteria.put(Variables.THRESHOLD_3, 1000000l);
+            criteria.put(Variables.THRESHOLD_1, 1000000000l);
+            //criteria.put(Variables.THRESHOLD_3, 1000000l);
             getCorrelationScoreForMatrices(criteria,
                     path + "V7/differenceMatrix-pos-w-1.csv",
                     version,
@@ -62,7 +62,7 @@ public class Prioritizer {
                     path + "changeMatrix-pos-w-1.csv",
                     "Positional Weighted",
                     type,
-                    0);
+                    876);
         }
 
         /*        getCorrelationScoreForMatrices(criteria,

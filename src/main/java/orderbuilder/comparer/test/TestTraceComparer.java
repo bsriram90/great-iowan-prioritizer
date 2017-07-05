@@ -19,6 +19,7 @@ public class TestTraceComparer extends TestComparer {
     @Override
     public LinkedList<String> getExecutionOrder(ChangeMatrix change, List<DifferenceMatrix> diff, HashMap<String, Object> criteria, String startTest) throws Exception {
         TestTraceDifferenceMatrix<Long> prev = (TestTraceDifferenceMatrix) diff.get(0);
+        StringBuilder randomTests = new StringBuilder("");
         // TestTraceDifferenceMatrix<Long> current = (TestTraceDifferenceMatrix) diff.get(1);
         boolean debug = (boolean) criteria.get(Variables.DEBUG);
         Long differenceThreshold = (Long) criteria.get(Variables.THRESHOLD_1);
@@ -52,40 +53,75 @@ public class TestTraceComparer extends TestComparer {
                     coreTests.clear();
                     coreTests.add(currentTest);
                 }
+                while(!coreTests.isEmpty()) {
+                    Set<String> testsInCase = prev.getAllTestsForTestCase(currentTestCase);
+                    String closest = null;
+                    Long closeness = Long.MAX_VALUE;
+                    for(String test : testsInCase) {
+                        if(!newOrder.contains(test)) {
+                            Long dist = 0l;
+                            for (String coreTest : coreTests) {
+                                dist += (Long) prev.getDifferenceBetweenTests(test, coreTest);
+                            }
+                            if (dist < differenceThreshold * coreTests.size() && dist < closeness) {
+                                closest = test;
+                                closeness = dist;
+                            }
+                        }
+                    }
+                    if(closest == null || (Long)change.getChangeByTest(closest) < pathFitness) {
+                        break;
+                    } else {
+                        newOrder.add(closest);
+                        coreTests.add(closest);
+                    }
+                }/*
                 List<String> insideTestCaseOrder = prev.getOrderedClosestTestsInTestCase(currentTest, pathFitness, currentTestCase, newOrder, change);
                 if (insideTestCaseOrder != null && insideTestCaseOrder.size() >= 1) {
                     //coreTests.add(currentTest);
                     //differingTraces.put(currentTest, getTraceDifference(prev.getTraceForTest(currentTest), current.getTraceForTest(currentTest)));
                     newOrder.addAll(insideTestCaseOrder);
-                }
+                }*/
             }
             if (testCasesCovered.size() >= prev.getNumOfTestCases() && newOrder.size() < change.getSize()) {
                 testCasesCovered = new ArrayList<>();
+                testsDiffered = false;
                 coreTests = new HashSet<>();
-                results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
-                newOrder.addAll((LinkedList<String>) results[1]);
-                currentTest = (String) results[0];
-                if (currentTest != null) {
-                    coreTests.add(currentTest);
-                    //differingTraces.put(currentTest, getTraceDifference(prev.getTraceForTest(currentTest), current.getTraceForTest(currentTest)));
+                //results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
+                String next = null;
+                while(next == null) {
+                    String t = change.getRandomTest();
+                    if(!newOrder.contains(t)) {
+                        next = t;
+                    }
                 }
+                randomTests.append(next + ",");
+                newOrder.add(next);
+                currentTest = next;
+                coreTests.add(next);
             } else {
                 currentTest = getNextTest(prev, testCasesCovered, coreTests, newOrder, testsDiffered);
                 if (currentTest == null) {
                     testCasesCovered = new ArrayList<>();
                     coreTests = new HashSet<>();
-                    results = TestComparerUtil.getOrderUntilDifferingTest(logger, change, null, differenceThreshold, debug, newOrder);
-                    newOrder.addAll((LinkedList<String>) results[1]);
-                    currentTest = (String) results[0];
-                    if (currentTest != null) {
-                        coreTests.add(currentTest);
-                        //differingTraces.put(currentTest, getTraceDifference(prev.getTraceForTest(currentTest), current.getTraceForTest(currentTest)));
+                    testsDiffered = false;
+                    String next = null;
+                    while(next == null) {
+                        String t = change.getRandomTest();
+                        if(!newOrder.contains(t)) {
+                            next = t;
+                        }
                     }
+                    randomTests.append(next + ",");
+                    newOrder.add(next);
+                    currentTest = next;
+                    coreTests.add(next);
                 }
             }
             currentTestCase = prev.getTestCaseByTest(currentTest);
             testCasesCovered.add(currentTestCase);
         }
+        System.out.print("(" + randomTests.toString() + ")");
         return newOrder;
     }
 

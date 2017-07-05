@@ -4,6 +4,7 @@ import orderbuilder.model.differenceMatrix.TestTraceDifferenceMatrix;
 import orderbuilder.util.Util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -52,10 +53,10 @@ public class Score {
             } else {
                 score = Score.spearmanCoefficient(reference.subList(0, limit), result, spearman_n);
             }
-            body.append(score + ",");
+            body.append(score + " & ");
         }
-        System.out.println(header);
-        System.out.println(body);
+        //System.out.println(header);
+        System.out.print(body);
     }
 
     public static Float customCorrelationScore(List<String> referenceResult, List<String> order) {
@@ -146,7 +147,7 @@ public class Score {
 
     public static void main(String[] args) {
         String[] ref = new String[]{"1", "2", "3", "4", "5"};
-        /*String[] test1 = new String[]{"1", "2", "3", "4", "5"};
+        String[] test1 = new String[]{"1", "2", "3", "4", "5"};
         String[] test2 = new String[]{"5", "4", "3", "2", "1"};
         String[] test3 = new String[]{"5", "1", "2", "3", "4"};
         String[] test4 = new String[]{"2", "1", "4", "5", "3"};
@@ -166,7 +167,7 @@ public class Score {
         System.out.println(Arrays.asList(test6));
         Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test6),1.0f,"spearman");
         System.out.println(Arrays.asList(test7));
-        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test7),1.0f,"spearman");*/
+        Score.printCorrelationScoreByBands(Arrays.asList(ref), Arrays.asList(test7), 1.0f, "spearman");
 
         String[] apfdTest = new String[]{"1"};
 

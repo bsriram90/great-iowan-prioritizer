@@ -132,12 +132,12 @@ public class TestTraceComparer extends TestComparer {
             }
             testFitness = testFitness / coreTests.size();
             if (testsDiffered) {
-                if (testFitness <= dist) {
+                if (testFitness >= dist) {
                     closest = candidate;
                     dist = testFitness;
                 }
             } else {
-                if (testFitness >= dist) {
+                if (testFitness <= dist) {
                     closest = candidate;
                     dist = testFitness;
                 }

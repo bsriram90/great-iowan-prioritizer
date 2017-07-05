@@ -43,35 +43,29 @@ public class Prioritizer {
     public static void main(String[] args) throws Exception {
 
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
-        String path = "./res/test-trace/xml-security/";
+        String path = "./res/test-trace/ant/";
         String type = "spearman";
-        String version = "V2";
+        String version = "V7";
 
-        getCorrelationScoreForMatrices(criteria,
-                path + "V2/differenceMatrix-pos-w.csv",
-                version,
-                path,
-                path + "changeMatrix-pos-w.csv",
-                "Positional Weighted",
-                type);
+        //Integer[] indices = new Integer[] {0,5,13,17,25,36,44,58,62,80};
 
-        /*getCorrelationScoreForMatrices(criteria,
-                path + "V7/differenceMatrix-pos-uw-1.csv",
-                version,
-                path,
-                path + "changeMatrix-pos-uw-1.csv",
-                "Positional Unweighted",
-                type);
+        Integer[] indices = new Integer[]{0, 100, 200, 300, 400, 500, 600, 700, 800, 876};
 
-        getCorrelationScoreForMatrices(criteria,
-                path + "V7/differenceMatrix-multiset-1.csv",
-                version,
-                path,
-                path + "changeMatrix-multiset-1.csv",
-                "Multiset",
-                type);
+        for (long index = 0; index < 100000; index += 1000) {
+            System.out.print(index + ",");
+            //criteria.put(Variables.THRESHOLD_1, index);
+            criteria.put(Variables.THRESHOLD_3, 1000000l);
+            getCorrelationScoreForMatrices(criteria,
+                    path + "V7/differenceMatrix-pos-w-1.csv",
+                    version,
+                    path,
+                    path + "changeMatrix-pos-w-1.csv",
+                    "Positional Weighted",
+                    type,
+                    0);
+        }
 
-        getCorrelationScoreForMatrices(criteria,
+        /*        getCorrelationScoreForMatrices(criteria,
                 path + "V7/differenceMatrix-set-1.csv",
                 version,
                 path,
@@ -80,13 +74,13 @@ public class Prioritizer {
                 type);*/
     }
 
-    private static void getCorrelationScoreForMatrices(HashMap<String, Object> criteria, String diffFileName, String version, String path, String changeFileName, String name, String type) throws Exception {
+    private static void getCorrelationScoreForMatrices(HashMap<String, Object> criteria, String diffFileName, String version, String path, String changeFileName, String name, String type, Integer startIndex) throws Exception {
         TestTraceDifferenceMatrix<Long> diffMatrix = new TestTraceDifferenceMatrix<>(diffFileName, Long.class, version, path);
         ChangeMatrix<Long> changeMatrix = new ChangeMatrix<>(changeFileName, Long.class);
         List<String> referenceResults = changeMatrix.getTestsByChangeDesc();
         List<DifferenceMatrix> diffList = new ArrayList<>();
         diffList.add(diffMatrix);
-        LinkedList<String> order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(0));
+        LinkedList<String> order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(startIndex));
 
         //String change_file = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\change-status.txt";
         //String change_value = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\diff-changes.txt";
@@ -99,10 +93,12 @@ public class Prioritizer {
         matrix.setReferenceResult(referenceResults);
         matrix.addResult(name, order);
         matrix.printOrderedResults();*/
-        System.out.println(name + " - " + order);
-        //Score.printCorrelationScoreByBands(referenceResults, order, 0.05f, type);
-        List<String> failiures = Util.getLinesFromFile("./res/test-trace/xml-security/V3-seeded/failed-tests.txt");
-        System.out.println(Score.getAPFDScore(order, failiures));
+        //System.out.println(name + " - " + order);
+        Score.printCorrelationScoreByBands(referenceResults, order, 1.0f, type);
+        //List<String> defOrder = Util.getLinesFromFile("C:\\Users\\Sriram\\Desktop\\RA\\ant-def-order.txt");
+        List<String> failiures = Util.getLinesFromFile("./res/test-trace/ant/V8/failed-tests.txt");
+        System.out.print("," + Score.getAPFDScore(order, failiures));
+        System.out.println();
     }
 
 

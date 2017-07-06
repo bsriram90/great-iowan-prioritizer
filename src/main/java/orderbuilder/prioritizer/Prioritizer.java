@@ -43,23 +43,23 @@ public class Prioritizer {
     public static void main(String[] args) throws Exception {
 
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
-        String path = "./res/test-trace/xml-security/";
+        String path = "./res/test-trace/ant/";
         String type = "spearman";
-        String version = "V2";
+        String version = "V7";
 
         Integer[] indices = new Integer[]{0, 5, 13, 17, 25, 36, 44, 58, 62, 80};
 
         //Integer[] indices = new Integer[]{0, 100, 200, 300, 400, 500, 600, 700, 800, 876};
 
-        for (int index = 0; index < 83; index++) {
+        for (int index = 0; index < 877; index+=80) {
             System.out.print(index + ",");
-            criteria.put(Variables.THRESHOLD_1, 1000000000l);
-            //criteria.put(Variables.THRESHOLD_3, 1000000l);
+            criteria.put(Variables.THRESHOLD_1, 10000 * 1000000l);
+            criteria.put(Variables.THRESHOLD_3, 100000l);
             getCorrelationScoreForMatrices(criteria,
-                    path + "V2/differenceMatrix-pos-w.csv",
+                    path + "V7/differenceMatrix-pos-w-1.csv",
                     version,
                     path,
-                    path + "changeMatrix-pos-w.csv",
+                    path + "changeMatrix-pos-w-1.csv",
                     "Positional Weighted",
                     type,
                     index);
@@ -82,9 +82,9 @@ public class Prioritizer {
         diffList.add(diffMatrix);
         Double totalCorr = 0.0;
         Double totalAPFD = 0.0;
-        List<String> failiures = Util.getLinesFromFile("./res/test-trace/xml-security/V3-seeded/failed-tests.txt");
-        Float[] bandValues = new Float[11];
-        for (int i = 0; i < 11; i++) {
+        List<String> failiures = Util.getLinesFromFile("./res/test-trace/ant/V8/failed-tests.txt");
+        Float[] bandValues = new Float[10];
+        for (int i = 0; i < 10; i++) {
             bandValues[i] = new Float(0);
         }
         for (int i = 0; i < 5; i++) {

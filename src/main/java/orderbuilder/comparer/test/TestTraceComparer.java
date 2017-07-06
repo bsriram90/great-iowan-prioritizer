@@ -63,7 +63,8 @@ public class TestTraceComparer extends TestComparer {
                             for (String coreTest : coreTests) {
                                 dist += (Long) prev.getDifferenceBetweenTests(test, coreTest);
                             }
-                            if (dist < differenceThreshold * coreTests.size() && dist < closeness) {
+                            if (dist < differenceThreshold * coreTests.size() &&
+                                    dist < closeness) {
                                 closest = test;
                                 closeness = dist;
                             }

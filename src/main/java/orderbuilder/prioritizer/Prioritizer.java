@@ -43,26 +43,26 @@ public class Prioritizer {
     public static void main(String[] args) throws Exception {
 
         HashMap<String, Object> criteria = Util.getDefaultPrioritizerCriteria();
-        String path = "./res/test-trace/ant/";
+        String path = "./res/test-trace/xml-security/";
         String type = "spearman";
-        String version = "V7";
+        String version = "V2";
 
-        //Integer[] indices = new Integer[] {0,5,13,17,25,36,44,58,62,80};
+        Integer[] indices = new Integer[]{0, 5, 13, 17, 25, 36, 44, 58, 62, 80};
 
-        Integer[] indices = new Integer[]{0, 100, 200, 300, 400, 500, 600, 700, 800, 876};
+        //Integer[] indices = new Integer[]{0, 100, 200, 300, 400, 500, 600, 700, 800, 876};
 
-        for (long index = 0; index < 100000; index += 1000) {
+        for (int index = 0; index < 83; index++) {
             System.out.print(index + ",");
             criteria.put(Variables.THRESHOLD_1, 1000000000l);
             //criteria.put(Variables.THRESHOLD_3, 1000000l);
             getCorrelationScoreForMatrices(criteria,
-                    path + "V7/differenceMatrix-pos-w-1.csv",
+                    path + "V2/differenceMatrix-pos-w.csv",
                     version,
                     path,
-                    path + "changeMatrix-pos-w-1.csv",
+                    path + "changeMatrix-pos-w.csv",
                     "Positional Weighted",
                     type,
-                    876);
+                    index);
         }
 
         /*        getCorrelationScoreForMatrices(criteria,
@@ -80,25 +80,48 @@ public class Prioritizer {
         List<String> referenceResults = changeMatrix.getTestsByChangeDesc();
         List<DifferenceMatrix> diffList = new ArrayList<>();
         diffList.add(diffMatrix);
-        LinkedList<String> order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(startIndex));
+        Double totalCorr = 0.0;
+        Double totalAPFD = 0.0;
+        List<String> failiures = Util.getLinesFromFile("./res/test-trace/xml-security/V3-seeded/failed-tests.txt");
+        Float[] bandValues = new Float[11];
+        for (int i = 0; i < 11; i++) {
+            bandValues[i] = new Float(0);
+        }
+        for (int i = 0; i < 5; i++) {
+            LinkedList<String> order = Prioritizer.getExecutionOrder(changeMatrix, diffList, criteria, referenceResults.get(startIndex));
+            totalCorr += Score.getCorrelationScore(referenceResults, order, type);
+            totalAPFD += Score.getAPFDScore(order, failiures);
 
-        //String change_file = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\change-status.txt";
-        //String change_value = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\diff-changes.txt";
+            //String change_file = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\change-status.txt";
+            //String change_value = "C:\\Users\\Sriram\\Desktop\\RA\\XML Sec compare\\diff-changes.txt";
 
-        //Validator validator = new Validator(change_file, change_value);
+            //Validator validator = new Validator(change_file, change_value);
 
 
-        //validator.printBandChangeSummary(order, diffMatrix, changeMatrix);
-        /*ResultMatrix matrix = new ResultMatrix(diffMatrix);
-        matrix.setReferenceResult(referenceResults);
-        matrix.addResult(name, order);
-        matrix.printOrderedResults();*/
-        //System.out.println(name + " - " + order);
-        Score.printCorrelationScoreByBands(referenceResults, order, 1.0f, type);
-        //List<String> defOrder = Util.getLinesFromFile("C:\\Users\\Sriram\\Desktop\\RA\\ant-def-order.txt");
-        List<String> failiures = Util.getLinesFromFile("./res/test-trace/ant/V8/failed-tests.txt");
-        System.out.print("," + Score.getAPFDScore(order, failiures));
-        System.out.println();
+            //validator.printBandChangeSummary(order, diffMatrix, changeMatrix);
+            /*ResultMatrix matrix = new ResultMatrix(diffMatrix);
+            matrix.setReferenceResult(referenceResults);
+            matrix.addResult(name, order);
+            matrix.printOrderedResults();*/
+            //System.out.println(name + " - " + order);
+            //Score.printCorrelationScoreByBands(referenceResults, order, 0.10f, type);
+            /*Float[] res = Score.getCorrelationScoreByBands(referenceResults, order, 0.10f, type);
+            for(int j=0; j<11; j++) {
+                bandValues[j] += res[j];
+            }*/
+            //List<String> defOrder = Util.getLinesFromFile("C:\\Users\\Sriram\\Desktop\\RA\\ant-def-order.txt");
+            /*System.out.print("Score - " + Score.getCorrelationScore(referenceResults, order, type));
+            System.out.print("," + Score.getAPFDScore(order, failiures));
+            System.out.println();*/
+        }
+        System.out.println(totalCorr / 5.0 + "," + totalAPFD / 5.0);
+        /*for(int j=0; j<11; j++) {
+            System.out.print(String.format("%.5g",bandValues[j]/5.0));
+            if(j != 10) {
+                System.out.print(" & ");
+            }
+        }
+        System.out.println();*/
     }
 
 

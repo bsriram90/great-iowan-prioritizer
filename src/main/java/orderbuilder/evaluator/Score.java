@@ -28,6 +28,56 @@ public class Score {
         return score;
     }
 
+    public static Float getCorrelationScore(List<String> referenceResult, List<String> order, String type) {
+        ArrayList<String> orderArrayList = new ArrayList<>(order);
+        ArrayList<Integer> reference = new ArrayList<>(order.size());
+        for (int i = 0; i < referenceResult.size(); i++) {
+            reference.add(i + 1);
+        }
+        Float spearman_n = Float.valueOf((referenceResult.size() * (referenceResult.size() * referenceResult.size() - 1)));
+        ArrayList<Integer> result = new ArrayList<>(order.size());
+        for (String test : referenceResult) {
+            result.add(orderArrayList.indexOf(test) + 1);
+        }
+        Float score;
+        if (type.equals("custom")) {
+            score = Score.correlationScore(reference, result);
+        } else {
+            score = Score.spearmanCoefficient(reference, result, spearman_n);
+        }
+        return score;
+    }
+
+    public static Float[] getCorrelationScoreByBands(List<String> referenceResult, List<String> order, Float band, String type) {
+        ArrayList<String> orderArrayList = new ArrayList<>(order);
+        ArrayList<Integer> reference = new ArrayList<>(order.size());
+        int bandSize = Math.round(referenceResult.size() * band);
+        for (int i = 0; i < referenceResult.size(); i++) {
+            reference.add(i + 1);
+        }
+        StringBuilder header = new StringBuilder("");
+        StringBuilder body = new StringBuilder("");
+        int n = (int) Math.ceil((float) referenceResult.size() / bandSize);
+        Float[] results = new Float[n];
+        Float spearman_n = Float.valueOf((referenceResult.size() * (referenceResult.size() * referenceResult.size() - 1)));
+        for (int i = 0; i < n; i++) {
+            ArrayList<Integer> result = new ArrayList<>(order.size());
+            int limit = (i * bandSize + bandSize > referenceResult.size()) ? referenceResult.size() : i * bandSize + bandSize;
+            List<String> referenceSubset = referenceResult.subList(0, limit);
+            for (String test : referenceSubset) {
+                result.add(orderArrayList.indexOf(test) + 1);
+            }
+            Float score;
+            if (type.equals("custom")) {
+                score = Score.correlationScore(reference.subList(0, limit), result);
+            } else {
+                score = Score.spearmanCoefficient(reference.subList(0, limit), result, spearman_n);
+            }
+            results[i] = score;
+        }
+        return results;
+    }
+
     public static void printCorrelationScoreByBands(List<String> referenceResult, List<String> order, Float band, String type) {
         ArrayList<String> orderArrayList = new ArrayList<>(order);
         ArrayList<Integer> reference = new ArrayList<>(order.size());
@@ -47,7 +97,7 @@ public class Score {
                 result.add(orderArrayList.indexOf(test) + 1);
             }
             header.append("Band-" + i + "(Size=" + result.size() + "),");
-            Float score = null;
+            Float score;
             if(type.equals("custom")) {
                 score = Score.correlationScore(reference.subList(0, limit), result);
             } else {

@@ -99,7 +99,7 @@ public class TestTraceComparer extends TestComparer {
                 newOrder.add(next);
                 currentTest = next;
                 coreTests.add(next);
-            } else {
+            } else if (newOrder.size() < change.getSize()) {
                 currentTest = getNextTest(prev, testCasesCovered, coreTests, newOrder, testsDiffered);
                 if (currentTest == null) {
                     testCasesCovered = new ArrayList<>();
@@ -121,7 +121,7 @@ public class TestTraceComparer extends TestComparer {
             currentTestCase = prev.getTestCaseByTest(currentTest);
             testCasesCovered.add(currentTestCase);
         }
-        System.out.print("(" + randomTests.toString() + ")");
+        //System.out.print("(" + randomTests.toString() + ")");
         return newOrder;
     }
 

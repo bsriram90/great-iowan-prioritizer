@@ -51,9 +51,9 @@ public class Prioritizer {
 
         //Integer[] indices = new Integer[]{0, 100, 200, 300, 400, 500, 600, 700, 800, 876};
 
-        for (int index = 0; index < 877; index+=80) {
+        for (int index = 0; index < 877; index++) {
             System.out.print(index + ",");
-            criteria.put(Variables.THRESHOLD_1, 10000 * 1000000l);
+            criteria.put(Variables.THRESHOLD_1, 100 * 1000000l);
             criteria.put(Variables.THRESHOLD_3, 100000l);
             getCorrelationScoreForMatrices(criteria,
                     path + "V7/differenceMatrix-pos-w-1.csv",
